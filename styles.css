@@ -1,0 +1,193 @@
+.page-container{
+    display: flex; 
+    flex-direction: row;
+
+}
+.title-container {
+    display: flex; 
+   
+    padding-top: 50px;
+    display: flex;
+    height: auto;
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.title-area {
+    display: flex; 
+    align-items: center;
+    gap: 10px; 
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: rgb(18, 51, 51);
+    font-size: clamp(1rem, 2vw, 2rem);
+}
+
+img {
+    width: clamp(80px, 15vw, 160px);
+    height: auto;
+    margin-right: 10px;
+}
+
+#home-name {
+    font-size: clamp(1rem, 9vw, 2.7rem);
+}
+.search-box {
+    left: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(1rem, 1vw, 1rem);
+    display: flex;
+    align-items: center;
+    background: #d3d3d3;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 350px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#search{
+    width: clamp(20px, 0vw, 0px);
+    height: auto;
+    margin-right: 10px;
+}
+.search-box input {
+    border: none;
+    background: transparent;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+    color: #888;
+}
+
+.search-box button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+}
+
+#patients{ 
+    width: 56.6px;
+    height: auto;
+    margin-right: 10px;
+}
+
+.number-of-patients {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    border-radius: 10px;
+    width: 113px;
+    height: 132px;
+    background-color: #F9F7CC;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    margin-top: 60px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+#patient-number{
+    font-size: 12px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+
+#add-button{
+    padding: 0px;
+    border-radius: 10px;
+    background-color: #51CCB7;
+    height:50px;
+    width:50px;
+    margin-left:5px;
+    margin-top:170px;
+}
+
+#add-button:hover {
+    background-color:  #2b6158;
+    cursor: pointer;
+}
+.patient-container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    margin-top: 20px;
+
+    display: flex;
+
+
+    width: 100%;
+    padding-top: 20px;
+    background-color: white;
+    gap: 10px;
+    height: auto;
+    
+}
+
+.patient-card {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    height: 50px;
+    font-family:Arial, Helvetica, sans-serif;
+    display: flex;
+    text-align: left;
+    flex-direction: column;
+    background: #FAFAFA;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 4, 4, 0.1);
+    width: 80%; 
+    max-width:400px;
+    margin-bottom: 20px;
+}
+
+
+.patient-card:hover{
+    background: #dad8d8;
+    transition: 0.5s;
+}
+.patient-info {
+
+    padding-left: 20px;
+    display: flex;
+
+    gap: 10px;
+    font-weight: bold;
+    color: #555;
+}
+
+.patient-id {
+    font-size: 16px;
+}
+
+.patient-name {
+    font-size: 16px;
+    color: #333;
+}
+
+.patient-details {
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+}
+
+.divider {
+    color: #bbb;
+}
+
