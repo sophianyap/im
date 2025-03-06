@@ -1,5 +1,7 @@
 body{
     background-color: #f1fcfc;
+    font-family: 'Poppins', sans-serif;     
+
 }
 .page-container{
     display: flex; 
@@ -128,13 +130,6 @@ img {
     
 }
 
-.patient-number {
-
-}
-
-
-
-
 #add-button{
     margin-top: 60px;
     border: none;
@@ -253,4 +248,319 @@ img {
     color: #bbb;
 }
 
+/*patientInfo */
 
+.top-part {
+    margin-left: 50px;
+    margin-top: 30px;
+    margin-right: 50px;
+    height: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.left-side-top {
+    display: flex;
+    align-items: center;
+}
+
+#go-home {
+    width: 24px;
+    height: 24px;
+}
+
+#home-button {
+    border: none;
+    background: #d9d9d9;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 47px;
+    height: 47px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#home-button:hover {
+    background-color: #858585;
+    transition: 0.3s ease-in-out;
+}
+
+#backto {
+    font-size: 120%;
+    margin-left: 10px;
+    color: #555;
+}
+
+.right-side-top {
+    display: flex;
+    margin-left: 0px;
+    gap:10px;
+}
+
+.editbtn,
+.delbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    border-radius: 15px;
+    width: auto;
+    max-width: 200px;
+    height: 40px;
+    padding: 1px 5px;
+    cursor: pointer;
+}
+
+.editbtn {
+    background-color: #81CFEC;
+}
+
+#edit-profile {
+    border: none;
+    background: none;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+
+.delbtn {
+    background-color: #F5DCDD;
+}
+
+#delete-patient {
+    border: none;
+    background: none;
+    color: #F85050;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items:center;
+    justify-self:flex-start;
+    gap: 0px;
+}
+
+#edit-icon {
+    width: 18px;
+    height: 18px;
+    
+}
+#delete-icon{
+    width: 28px;
+    height: 28px;
+}
+
+.big-blue-bg {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 100%;
+    background-color: #769BB2;
+    margin: 40px auto;
+    border-radius: 10px;
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 0
+}
+
+.first-part{
+    position: relative;
+    border: 10px solid #51CCB7;
+    border-radius: 10px;
+    background-color: white;
+    padding: 20px;
+    z-index: 1;
+    text-align: center;
+    width: 80%;
+    max-width: 1600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 100%;
+    margin: 20px auto;
+    padding-top: 75px;
+}
+
+
+.photo {
+    position: absolute;
+    top: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("assets/account_circle.png");
+    background-size: cover;
+    background-color: white;
+    border: 8px solid #51CCB7;
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    z-index: 2;
+    justify-content: center;
+}
+
+.patient-id-title{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+
+}
+.patient-name{
+    font-size: 140%;
+    font-weight: bold;
+}
+.photo img{
+    
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
+.date-add{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color: #585858;
+    font-size: 12px;
+}
+
+.para-ma-side {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding-left: 20px;
+    
+}
+
+.patient-information {
+    background-color: #51CCB7;
+    padding: 10px 20px;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    z-index: 2;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; 
+    border-bottom-left-radius: 0; 
+    border-bottom-right-radius: 0;
+    
+}
+
+
+.third-part,
+.second-part {
+    width: 90%;
+    max-width: 1600px;
+    z-index: 1;
+    margin-left: 20px auto;
+    margin-right: 20px auto;
+    margin-bottom: 20px auto;
+}
+.third-part2,
+.second-part2 {
+    
+    position: relative;
+    border: 10px solid #51CCB7;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+    width:90%;
+    padding: 20px;
+    margin-left: 20px auto;
+    margin-right: 20px auto;
+    margin-bottom: 20px ;
+    padding-left:20px;
+}
+
+.info-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+    width: 100%;
+    text-align: left;
+}
+
+.info-patient1,
+.info-patient2,
+.info-patient3{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 10px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.information,
+.info-title {
+    font-size: 80%;
+    color: #585858;
+    font-weight: bold;
+}
+
+.information {
+    color: black;
+}
+
+#button_world{
+    position: relative;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px; 
+    border-bottom-left-radius: 0; 
+    border-bottom-right-radius: 0;
+    padding: 10px 20px;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    text-align: left;
+    z-index: 2;
+    border: none;
+    background-color: #51CCB7;
+}
+
+.medical-condition{
+    
+    display: grid;
+    flex-direction: row;
+    width: 100%;
+
+}
+.medical-info{
+
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #E4E9F5;
+    width: 80%;
+}
+.current-medication{
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #E4E9F5;
+    width: 30%;
+    max-width: 600px;
+
+}
+.medical-hstry{
+    display: flex;
+    
+
+}
