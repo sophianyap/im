@@ -1,161 +1,176 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-        <title>Patient Information</title>
-    </head>
-    <body>
-        <div class="top-part">
-            <div class="left-side-top">
-                <a href="homepage.html">
-                    <button id="home-button">
-                        <img id="go-home" src="assets\back button.png" alt="back">
-                    </button>
-                </a>
-                <h1 id="backto">Back to Home Page</h1>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>Patient Information</title>
+</head>
+
+<body>
+    <div class="top-part">
+        <div class="left-side-top">
+            <a href="homepage.html">
+                <button id="home-button">
+                    <img id="go-home" src="assets\back button.png" alt="back">
+                </button>
+            </a>
+            <h1 id="backto">Back to Home Page</h1>
+        </div>
+
+        <div class="right-side-top">
+            <div class="editbtn">
+                <a href="edit-profile.html">
+                <button id="edit-profile">
+                    <img id="edit-icon" src="assets\border_color.png" alt="edit">
+                    Edit Profile</button></a>
             </div>
-            
-            <div class="right-side-top">
-                <div class="editbtn">
-                    <button id="edit-profile">
-                        <img id="edit-icon" src="assets\border_color.png" alt="edit">
-                        Edit Profile</button>
-                </div>
-                <div class="delbtn">
-                    <button id="delete-patient">
-                        <img id="delete-icon" src="assets\close_small.png" alt="edit">
-                        Delete Patient</button>
-                </div>
+            <div class="delbtn">
+                <button id="delete-patient">
+                    <img id="delete-icon" src="assets\close_small.png" alt="edit">
+                    Delete Patient</button>
             </div>
         </div>
-        <div class="big-blue-bg">
-            <div class="photo">
-                <img id="photo-person" src="assets\account_circle.png" alt="picture">
+    </div>
+    <div class="big-blue-bg">
+        <div class="photo">
+            <img id="photo-person" src="assets\account_circle.png" alt="picture">
+        </div>
+        <div class="first-part">
+            <div class="first-line2">
+                <div class="patient-name">LAST NAME, First Name</div>
+                <div class="patient-id-title">
+                    <div>ID:</div>
+                    <div class="patient-id">
+                        123
+                    </div>
+
+                </div>
+                <div class="date-add">
+                    <div class="dt">Date Added:</div>
+                    <div class="date-added">[add date added]</div>
+                </div>
+
             </div>
-            <div class="first-part">
-                <div class="first-line2">
-                    <div class="patient-name">LAST NAME, First Name</div>
-                    <div class="patient-id-title">
-                        <div>ID:</div>
-                        <div class="patient-id">
-                            123
-                        </div>
-                        
+        </div>
+
+        <div class="para-ma-side">
+            <div class="patient-information">
+                PATIENT INFORMATION
+            </div>
+        </div>
+
+        <div class="second-part">
+            <div class="info-box">
+                <div class="info-patient1">
+                    <div class="info-age">
+                        <div class="info-title">AGE:</div>
+                        <div class="information">20</div>
                     </div>
-                    <div class="date-add">
-                        <div class="dt">Date Added:</div>
-                        <div class="date-added">[add date added]</div>
+                    <div class="info-age">
+                        <div class="info-title">MOBILE NUMBER:</div>
+                        <div class="information">0912 345 6789</div>
                     </div>
+                    <div class="info-age">
+                        <div class="info-title">ADDRESS:</div>
+                        <div class="information">Davao City</div>
+                    </div>
+                </div>
+                <div class="info-patient2">
+                    <div class="info-age">
+
+                        <div class="info-title">BIRTHDATE:</div>
+                        <div class="information">[Month Day, Year]</div>
+                    </div>
+                    <div class="info-age">
+                        <div class="info-title">EMAIL:</div>
+                        <div class="information">email@email.com</div>
+                    </div>
+                    <div class="info-age">
+                        <div class="info-title">OCCUPATION:</div>
+                        <div class="information">Student</div>
+
+                    </div>
+                </div>
+                <div class="info-patient2">
+                    <div class="info-age">
+
+                        <div class="info-title">GENDER:</div>
+                        <div class="information">Female</div>
+                    </div>
+                    <div class="info-age">
+                        <div class="info-title">CIVIL STATUS:</div>
+                        <div class="information">Single</div>
+                    </div>
+                    <div class="info-age">
+                        <div class="info-title">RELIGION:</div>
+                        <div class="information">Catholic</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="para-ma-side">
+            <div class="medical-history">
+                <a href="patientInfo.html">
+                    <button id="mh">
+                        MEDICAL HISTORY
+                    </button>
+                </a>
+            </div>
+            <div class="">
+                <a href="patientInfo.html">
+                    <button id="ah">
+                        APPOINTMENT HISTORY
+                    </button>
+                </a>
+            </div>
+        </div>
+        <div class="third-part">
+            <div class="medical-hstry1">
+                <div class="information">MEDICAL CONDITION</div>
+                <div class="info-title">
+                    <ol>
+                        medical condition 1
+                    </ol>
+                    <ol>
+                        medical condition 2
+                    </ol>
+                </div>
+            </div>
+            <div class="medical-hstry2">
+                <div class="information">CURRENT MEDICATIONS</div>
+                <div class="info-title">
+                    <ol>
+                        medical condition 1
+                    </ol>
+                    <ol>
+                        medical condition 2
+                    </ol>
+                    <ol>
+                        medical condition 1
+                    </ol>
+                    <ol>
+                        medical condition 2
+                    </ol>
                     
                 </div>
             </div>
-
-            <div class="second-part">
-                <div class="para-ma-side">
-                    <div class="patient-information">
-                        PATIENT INFORMATION
-                    </div>
-                </div>
-                    <div class="second-part2">
-                        <div class="info-box">
-                            <div class="info-patient1">
-                                <div class="info-age">
-                                    <div class="info-title">AGE:</div>
-                                    <div class="information">20</div>
-                                </div>
-                                <div class="info-age">
-                                    <div class="info-title">MOBILE NUMBER:</div>
-                                    <div class="information">0912 345 6789</div>
-                                </div>
-                                <div class="info-age">
-                                    <div class="info-title">ADDRESS:</div>
-                                    <div class="information">Davao City</div>
-                                </div>
-                            </div>
-                            <div class="info-patient2">
-                                <div class="info-age">
-                                    
-                                    <div class="info-title">BIRTHDATE:</div>
-                                    <div class="information">[Month Day, Year]</div>
-                                </div>
-                                <div class="info-age">
-                                    <div class="info-title">EMAIL:</div>
-                                    <div class="information">email@email.com</div>
-                                </div>
-                                <div class="info-age">
-                                    <div class="info-title">OCCUPATION:</div>
-                                    <div class="information">Student</div>
-                                    
-                                </div>
-                            </div>
-                            <div class="info-patient2">
-                                <div class="info-age">
-                                    
-                                    <div class="info-title">GENDER:</div>
-                                    <div class="information">Female</div>
-                                </div>
-                                <div class="info-age">
-                                    <div class="info-title">CIVIL STATUS:</div>
-                                    <div class="information">Single</div>
-                                </div>
-                                <div class="info-age">
-                                    <div class="info-title">RELIGION:</div>
-                                    <div class="information">Catholic</div>
-                                </div>
-                            </div>
-                        </div>
-        
-                </div>
-            </div>
-            <div class="third-part">
-                <div class="para-ma-side">
-                    <div class="medical-history">
-                        <a href="patientInfo.html">
-                            <button id="button_world">
-                                MEDICAL HISTORY
-                            </button>
-                        </a>
-                    </div>
-                    <div class="">
-                        <a href="patientInfo.html">
-                            <button id="button_world">
-                                APPOINTMENT HISTORY
-                            </button>
-                        </a>
-                    </div>
-                </div>
-                <div class="third-part2">
-                    <div class="medical-hstry">
-                        <div class="medical-condition">
-                            <div class="medical-info">
-                                <div class="info-title">
-                                    MEDICAL CONDITIONS
-                                </div>
-                                <div class="information">
-                                    medical condition 1
-                                    <br>
-                                    medical condition 2
-                                </div>
-                            </div>
-                        </div>
-                        <div class="current-medication">
-                            <div class="medication-info">
-                                <div class="info-title">
-                                    CURRENT MEDICATIONS
-                                </div>
-                                <div class="information">
-                                    medical condition 1
-                                    medical condition 2
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
+            
+        </div>
 
         </div>
-        
-    </body>
+        </div>
+
+
+
+
+    </div>
+
+
+
+</body>
+
 </html>
