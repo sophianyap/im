@@ -23,7 +23,6 @@ server.listen(PORT, () => {
             const familyV4Value = typeof net.family === 'string' ? 'IPv4' : 4
             if (net.family === familyV4Value && !net.internal) {
                 console.log(`${name}: http://${net.address}:${PORT}/`);
-                console.log(`${name}: http://${net.address}:${PORT}/getfeedbacks`);
             }
         }
     }
