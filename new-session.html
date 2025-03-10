@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>Patient Information</title>
+</head>
+
+<body>
+    <div class="top-part2">
+        <div class="left-side-top">
+            <a href="patientInfo.html">
+                <button id="home-button">
+                    <img id="go-home" src="assets\back button.png" alt="back">
+                </button>
+            </a>
+        </div>
+        <div class="center-top">
+            <h1 class="new-ds">NEW DENTAL SESSION</h1>
+            <p class="date-today-ds">Friday- March 07, 2025</p>
+        </div>
+
+    </div>
+    <div class="big-blue-bg">
+        <div class="first-part-nds">
+            <h3 id="title-name">PRE TREATMENT ASSESSMENT</h1>
+            <img id="ortho" src="assets\orthogram.png">
+        </div>
+        <div class="second-part-nds">
+            <h3 id="title-name">SERVICE</h3>
+            <div class="ser-container">
+                <div class="service-card">
+                    <input id="service-name">>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        document.getElementById("addButton").addEventListener("click", function() {
+            let newDiv = document.createElement("div");
+            newDiv.className = "service-name";
+            newDiv.innerText = "Newly Added Div";
+            
+            document.getElementById("container").appendChild(newDiv);
+        });
+    </script>
+
+</body>
+
+</html>

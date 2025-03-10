@@ -122,12 +122,12 @@ img {
     justify-content: center;
     align-items: center;
     border-radius: 10px;
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 120px;
     background-color: #0d0dd8;
     padding: 5px;
     margin-left: 10px;
-    margin-top: 120px;
+    margin-top: 90px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
@@ -398,7 +398,7 @@ img {
     border-radius: 10px;
     flex-direction: column;
     padding-top: 20px;
-    padding-bottom: 0
+    padding-bottom: 20px;
 }
 
 
@@ -508,7 +508,7 @@ img {
     /* Overlaps the box border */
 }
 
-
+.ser-container,
 .first-part,
 .third-part,
 .second-part,
@@ -546,9 +546,7 @@ img {
 .first-part {
     padding-top: 75px;
 }
-.fourth-part{
-    margin-bottom: 50px;
-}
+
 .second-part,
 .third-part {
     padding-top: 30px;
@@ -733,7 +731,7 @@ img {
     justify-content: right;
     align-items: center;
     gap: 10px;
-
+}
 #add-button-appt {
     border: none;
     background: none;
@@ -745,6 +743,60 @@ img {
     font-size: 30px;
     color: #296158;
 }
-#add-button-appt:hover{
-    background-color: #62e9d0;
+#add-button-appt:hover{background-color: #62e9d0;}  
+/*new session*/
+.new-ds,
+.date-today-ds{
+    margin: 0px;
+    font-family: 'Poppins', sans-serif;
+    
+    
+}
+
+.top-part2 {
+    margin-left: 50px;
+    margin-top: 30px;
+    margin-right: 50px;
+    height: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.center-top{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: right;
+    gap: 0px;
+}
+
+#ortho{
+    width: 90%;
+    
+    height: auto;
+}
+
+.first-part-nds{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#title-name{
+    color: white;
+}
+.ser-container{
+    width: 100%;
+}
+
+#service-name{
+    border: none;
+    background-color: #D9D9D9;
 }
