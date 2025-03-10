@@ -23,30 +23,143 @@
         </div>
 
     </div>
-    <div class="big-blue-bg">
+    <div class="big-blue-bg2">
         <div class="first-part-nds">
             <h3 id="title-name">PRE TREATMENT ASSESSMENT</h1>
             <img id="ortho" src="assets\orthogram.png">
         </div>
-        <div class="second-part-nds">
-            <h3 id="title-name">SERVICE</h3>
-            <div class="ser-container">
-                <div class="service-card">
-                    <input id="service-name">>
-                </div>
-            </div>
 
-        </div>
-    </div>
-    <script>
-        document.getElementById("addButton").addEventListener("click", function() {
-            let newDiv = document.createElement("div");
-            newDiv.className = "service-name";
-            newDiv.innerText = "Newly Added Div";
+        <h3 id="title-name">SERVICE</h3>
+        <div class="second-part-nds">
+            <div class="tp-service">
+                <h3 ID="add-ser-title">ADD SERVICE</h3>
+                <button id="add-service">
+                    +
+                </button>
+
+            </div>
+            <div class="service-title-container">
+                    <h3 id="service-title">SERVICE</h3>
+                    <h3 id="service-title">REMARKS</h3>
+            </div>   
+            <div class="service-card">
+                    <div class="service-line">
+                        <select name="" id="service">
+                            <option value="tooth_filling">TOOTH FILLING</option>
+                            <option value="tooth_cleaning">TOOTH CLEANING</option>
+                            <option value="braces">BRACES</option>
+                            <option value="tooth_extraction">TOOTH EXTRACTION</option>
+                            <option value="root_canal">ROOT CANAL TREATMENT</option>
+                            <option value="teeth_whitening">TEETH WHITENING</option>
+                            <option value="dental_implants">DENTAL IMPLANTS</option>
+                            <option value="veneers">VENEERS</option>
+                            <option value="dentures">DENTURES</option>
+                            <option value="gum_treatment">GUM TREATMENT</option>
+                            <option value="orthodontics">ORTHODONTICS</option>
+                            <option value="crown_bridge">CROWN & BRIDGE</option>
+                            <option value="wisdom_tooth_removal">WISDOM TOOTH REMOVAL</option>
+                            <option value="tmj_treatment">TMJ TREATMENT</option>
+                            <option value="kids_dentistry">KIDS DENTISTRY</option>
+                            <option value="dental_checkup">DENTAL CHECKUP</option>
+                            
+                        </select>
+                        <span class="divider2">|</span>
+                        <select name="remark" id="remarks">
+                            <option value="complete">Complete</option>
+                            <option value="incomplete">Incomplete</option>
+                          </select>
+                    </div>
+                    <div class="service-line">
+                        <select name="" id="service">
+                            <option value="tooth_filling">TOOTH FILLING</option>
+                            <option value="tooth_cleaning">TOOTH CLEANING</option>
+                            <option value="braces">BRACES</option>
+                            <option value="tooth_extraction">TOOTH EXTRACTION</option>
+                            <option value="root_canal">ROOT CANAL TREATMENT</option>
+                            <option value="teeth_whitening">TEETH WHITENING</option>
+                            <option value="dental_implants">DENTAL IMPLANTS</option>
+                            <option value="veneers">VENEERS</option>
+                            <option value="dentures">DENTURES</option>
+                            <option value="gum_treatment">GUM TREATMENT</option>
+                            <option value="orthodontics">ORTHODONTICS</option>
+                            <option value="crown_bridge">CROWN & BRIDGE</option>
+                            <option value="wisdom_tooth_removal">WISDOM TOOTH REMOVAL</option>
+                            <option value="tmj_treatment">TMJ TREATMENT</option>
+                            <option value="kids_dentistry">KIDS DENTISTRY</option>
+                            <option value="dental_checkup">DENTAL CHECKUP</option>
+                            
+                        </select>
+                        <span class="divider2">|</span>
+                        <select name="remark" id="remarks">
+                            <option value="complete">Complete</option>
+                            <option value="incomplete">Incomplete</option>
+                        </select>
+                    </div>
+                <div class="service-title-container">
+                        <h3 id="service-title">FINAL REMARKS</h3>
+                </div> 
+                <canvas id="final-remarks"></canvas>   
+                
+
+                <div class="final-remarks-text">
+                    <h3>REMARKS:</h3>
+                    <input id="input-final" type="text">
+                </div>
+                <div class="bottom-line">
+                    <button id="save-btn">
+                        SAVE
+                    </button>
+                </div>
+                
+                <script>
+                    const canvas = document.getElementById("final-remarks");
+                    const ctx = canvas.getContext("2d");
+                    const saveBtn = document.getElementById("saveBtn");
             
-            document.getElementById("container").appendChild(newDiv);
-        });
-    </script>
+                    let isDrawing = false;
+            
+                    canvas.addEventListener("mousedown", (e) => {
+                        isDrawing = true;
+                        ctx.beginPath();
+                        ctx.moveTo(e.offsetX, e.offsetY);
+                    });
+            
+                    canvas.addEventListener("mousemove", (e) => {
+                        if (isDrawing) {
+                            ctx.lineTo(e.offsetX, e.offsetY);
+                            ctx.stroke();
+                        }
+                    });
+            
+                    canvas.addEventListener("mouseup", () => {
+                        isDrawing = false;
+                    });
+            
+                    canvas.addEventListener("mouseleave", () => {
+                        isDrawing = false;
+                    });
+            
+                    saveBtn.addEventListener("click", () => {
+                        const image = canvas.toDataURL("image/png"); // Convert canvas to PNG
+                        const link = document.createElement("a");
+                        link.href = image;
+                        link.download = "drawing.png"; 
+                        link.click();
+                    });
+                </script>
+                
+
+
+            </div>
+                    
+            </div>
+            
+        </div>
+
+    </div>
+        
+    </div>
+    
 
 </body>
 
