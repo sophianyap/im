@@ -5,8 +5,10 @@ const server = createServer(app);
 const path = require('path');
 const PORT = process.env.PORT || 3000;
 const { networkInterfaces } = require('os');
+const apiRouter = require('./api.js')
 
 app.use(`/`, express.static(path.join(__dirname, 'public/')));
+app.use(`/api`, apiRouter);
 
 // 404 handler: keep this at the end, so it only catches requests that don’t match any defined routes
 app.use((req, res) => {
