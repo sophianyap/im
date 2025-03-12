@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <title>Patient Information</title>
 </head>
+
 <body>
     <div class="top-part2">
         <div class="left-side-top">
             <a href="/patient-info/index.html">
                 <button id="home-button">
-                    <img id="go-home" src="/assets/back button.png" alt="back">
+                    <img id="go-home" src="assets\back button.png" alt="back">
                 </button>
             </a>
         </div>
@@ -19,92 +21,85 @@
             <h1 class="new-ds">NEW DENTAL SESSION</h1>
             <p class="date-today-ds">Friday- March 07, 2025</p>
         </div>
+
     </div>
     <div class="big-blue-bg2">
-        <div class="first-part-nds">
-            <h3 id="title-name">PRE TREATMENT ASSESSMENT</h1>
-            <img id="ortho" src="/assets/orthogram.png">
-        </div>
+        
+
         <h3 id="title-name">SERVICE</h3>
         <div class="second-part-nds">
             <div class="tp-service">
                 <h3 ID="add-ser-title">ADD SERVICE</h3>
-                <button id="add-service">
+                <button id="add-servicebtn">
                     +
                 </button>
+                
+
             </div>
             <div class="service-title-container">
-                    <h3 id="service-title">SERVICE</h3>
-                    <h3 id="service-title">REMARKS</h3>
-            </div>   
+                <h3 id="service-title">SERVICE</h3>
+                <h3 id="service-title">REMARKS</h3>
+            </div>
             <div class="service-card">
-                    <div class="service-line">
-                        <select name="" id="service">
-                            <option value="tooth_filling">TOOTH FILLING</option>
-                            <option value="tooth_cleaning">TOOTH CLEANING</option>
-                            <option value="braces">BRACES</option>
-                            <option value="tooth_extraction">TOOTH EXTRACTION</option>
-                            <option value="root_canal">ROOT CANAL TREATMENT</option>
-                            <option value="teeth_whitening">TEETH WHITENING</option>
-                            <option value="dental_implants">DENTAL IMPLANTS</option>
-                            <option value="veneers">VENEERS</option>
-                            <option value="dentures">DENTURES</option>
-                            <option value="gum_treatment">GUM TREATMENT</option>
-                            <option value="orthodontics">ORTHODONTICS</option>
-                            <option value="crown_bridge">CROWN & BRIDGE</option>
-                            <option value="wisdom_tooth_removal">WISDOM TOOTH REMOVAL</option>
-                            <option value="tmj_treatment">TMJ TREATMENT</option>
-                            <option value="kids_dentistry">KIDS DENTISTRY</option>
-                            <option value="dental_checkup">DENTAL CHECKUP</option>
-                        </select>
-                        <span class="divider2">|</span>
-                        <select name="remark" id="remarks">
-                            <option value="complete">Complete</option>
-                            <option value="incomplete">Incomplete</option>
-                          </select>
-                    </div>
-                    <div class="service-line">
-                        <select name="" id="service">
-                            <option value="tooth_filling">TOOTH FILLING</option>
-                            <option value="tooth_cleaning">TOOTH CLEANING</option>
-                            <option value="braces">BRACES</option>
-                            <option value="tooth_extraction">TOOTH EXTRACTION</option>
-                            <option value="root_canal">ROOT CANAL TREATMENT</option>
-                            <option value="teeth_whitening">TEETH WHITENING</option>
-                            <option value="dental_implants">DENTAL IMPLANTS</option>
-                            <option value="veneers">VENEERS</option>
-                            <option value="dentures">DENTURES</option>
-                            <option value="gum_treatment">GUM TREATMENT</option>
-                            <option value="orthodontics">ORTHODONTICS</option>
-                            <option value="crown_bridge">CROWN & BRIDGE</option>
-                            <option value="wisdom_tooth_removal">WISDOM TOOTH REMOVAL</option>
-                            <option value="tmj_treatment">TMJ TREATMENT</option>
-                            <option value="kids_dentistry">KIDS DENTISTRY</option>
-                            <option value="dental_checkup">DENTAL CHECKUP</option>
-                        </select>
-                        <span class="divider2">|</span>
-                        <select name="remark" id="remarks">
-                            <option value="complete">Complete</option>
-                            <option value="incomplete">Incomplete</option>
-                        </select>
-                    </div>
+                <div class="service-line">
+                    <button id="delete-service">
+                        x
+                    </button>
+                    <select name="service" id="service">
+                        <option value="tooth_filling">TOOTH FILLING</option>
+                        <option value="tooth_cleaning">TOOTH CLEANING</option>
+                        <option value="braces">BRACES</option>
+                        <option value="tooth_extraction">TOOTH EXTRACTION</option>
+                        <option value="root_canal">ROOT CANAL TREATMENT</option>
+                        <option value="teeth_whitening">TEETH WHITENING</option>
+                        <option value="dental_implants">DENTAL IMPLANTS</option>
+                        <option value="veneers">VENEERS</option>
+                        <option value="dentures">DENTURES</option>
+                        <option value="gum_treatment">GUM TREATMENT</option>
+                        <option value="orthodontics">ORTHODONTICS</option>
+                        <option value="crown_bridge">CROWN & BRIDGE</option>
+                        <option value="wisdom_tooth_removal">WISDOM TOOTH REMOVAL</option>
+                        <option value="tmj_treatment">TMJ TREATMENT</option>
+                        <option value="kids_dentistry">KIDS DENTISTRY</option>
+                        <option value="dental_checkup">DENTAL CHECKUP</option>
+
+                    </select>
+                    <span class="divider2">|</span>
+                    <select name="remark" id="remarks">
+                        <option value="complete">Complete</option>
+                        <option value="incomplete">Incomplete</option>
+                    </select>
+                </div>
+                
                 <div class="service-title-container">
-                        <h3 id="service-title">FINAL REMARKS</h3>
-                </div> 
-                <canvas id="final-remarks"></canvas>   
+                    <h3 id="service-title">FINAL REMARKS</h3>
+                </div>
+                <canvas id="final-remarks"></canvas>
+
+
                 <div class="final-remarks-text">
                     <h3>REMARKS:</h3>
-                    <input id="input-final" type="text">
+                    <form  class="remarks-c">
+                        <input id="input-final" type="text">
+                    </form>
                 </div>
                 <div class="bottom-line">
                     <button id="save-btn">
                         SAVE
                     </button>
+                    <a id="check-out-container" href="/check-out/index.html">
+                        <button id="check-out-btn">
+                            Proceed to Checkout
+                        </button>
+                    </a>
                 </div>
+
+
                 <script>
                     const canvas = document.getElementById("final-remarks");
                     const ctx = canvas.getContext("2d");
                     const saveBtn = document.getElementById("saveBtn");
+
                     let isDrawing = false;
 
                     canvas.addEventListener("mousedown", (e) => {
@@ -112,34 +107,45 @@
                         ctx.beginPath();
                         ctx.moveTo(e.offsetX, e.offsetY);
                     });
-            
+
                     canvas.addEventListener("mousemove", (e) => {
                         if (isDrawing) {
                             ctx.lineTo(e.offsetX, e.offsetY);
                             ctx.stroke();
                         }
                     });
-            
+
                     canvas.addEventListener("mouseup", () => {
                         isDrawing = false;
                     });
-            
+
                     canvas.addEventListener("mouseleave", () => {
                         isDrawing = false;
                     });
-            
+
                     saveBtn.addEventListener("click", () => {
                         const image = canvas.toDataURL("image/png"); // Convert canvas to PNG
                         const link = document.createElement("a");
                         link.href = image;
-                        link.download = "drawing.png"; 
+                        link.download = "drawing.png";
                         link.click();
                     });
                 </script>
+
+
+
+
             </div>
-            </div>
+
         </div>
+
     </div>
+
     </div>
+
+    </div>
+
+
 </body>
+
 </html>

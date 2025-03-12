@@ -16,7 +16,6 @@ a {
 
 .title-container {
     margin-left: 20px;
-
     display: flex;
     padding-top: 50px;
     display: flex;
@@ -340,7 +339,7 @@ img {
 #edit-profile {
     border: none;
     background: none;
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: 15px;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
@@ -401,7 +400,7 @@ img {
     align-items: center;
     width: 90%;
     height: 100%;
-    background-color: #769BB2;
+    background-color: #304b78;
     margin: 40px auto;
     border-radius: 10px;
     flex-direction: column;
@@ -420,7 +419,8 @@ img {
     background-image: url("assets/account_circle.png");
     background-size: cover;
     background-color: white;
-    border: 8px solid #51CCB7;
+    border: 10px solid #56bda2;
+
     height: 130px;
     width: 130px;
     border-radius: 50%;
@@ -768,7 +768,7 @@ img {
     align-items: center;
     width: 90%;
     height: 100%;
-    background-color: #769BB2;
+    background-color: #304b78;
     margin: 40px auto;
     border-radius: 10px;
     flex-direction: column;
@@ -797,7 +797,7 @@ img {
 }
 
 #ortho{
-    border: 10px solid #51CCB7;
+    border: 10px solid #56bda2;
     border-radius: 10px;
     background-color: white;
     padding: 15px;
@@ -855,7 +855,8 @@ img {
     color: #5c5c5c;
 }
 
-#add-service{
+#add-servicebtn,
+#delete-servicebtn{
     width: 50%;
     height: 50%;
     max-width: 40px;
@@ -863,10 +864,34 @@ img {
     border: none;
     background: none;
     border-radius: 10px;
-    background-color: #51CCB7;
     font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#add-servicebtn{
+    background-color: #51CCB7;
     color: #296158;
-    margin-right: 20px;
+}
+
+#delete-servicebtn{
+    background-color: #fc6666;
+    color: #970505;
+}
+
+#delete-servicebtn:hover{
+    background-color: #bd3f3f;
+    color: #ffffff;
+    cursor: pointer;
+    transition: ease-in-out, 0.5s;
+
+}
+#add-servicebtn:hover{
+    background-color: #62e9d0;
+    cursor: pointer;
+    color: #ffffff;
+    transition: ease-in-out, 0.5s;
 }
 .service-title-container{
     display: flex;
@@ -942,8 +967,7 @@ img {
 .final-remarks-text{
     display: flex;
     flex-direction: row;
-    width: 95%;
-
+    width: 90%;
     gap:40px;
     width:102%;
     height:100%;
@@ -957,25 +981,390 @@ img {
     font-family: 'Poppins', sans-serif;
     text-align: right;
     border: black;
-    width: 100%;
+    width: 90%;
     padding-right:20px;
     font-size: 20px;
     background-color: transparent;
+    width: 90%;
+    height: 100%;
+    padding:20px
+
+
 }
 
-#save-btn{
-    width: 80px;
+.remarks-c{
+    padding:20px ;
+    width: 100%;
+    height: 100%;
+}
+
+.img-remark{
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#save-btn,
+#check-out-btn{
     height: 40px;
     font-family: 'Poppins', sans-serif;
     border: none;
     border-radius:  10px;
     font-size: 15px;
-    background-color: #51CCB7;
-    color: #ffffff;
     font-weight: bold;
 }
 .bottom-line{
+    width: 105%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+}
+#save-btn{
+    width: 52%;
+
+    background-color: #88ea6a;
+    color: #345a29;
+}
+#save-btn:hover{
+    background-color: #345a29;
+    color: #88ea6a;
+    transition: 0.5s;
+}
+
+#check-out-container{
+    width: 50%;
+}
+    
+#check-out-container2{
     width: 100%;
+    height: 50px;
+}
+#check-out-btn2{
+    height:100%;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    border: none;
+}
+#check-out-btn,#check-out-btn2{
+    width: 100%;
+    background-color: #E1EA6A;
+    color:  #E8591C;
+}
+#check-out-btn:hover, #check-out-btn2:hover{
+    background-color:#E8591C;
+    color:   #E1EA6A;
+    transition: 0.5s;
+}
+
+#chckout-img{
+    width: 10px;
+    height: 10px;
+}
+
+/*check-out*/
+
+.check-out-top{
+    margin-left: 50px;
+    margin-top: 30px;
+    margin-right: 50px;
+    height: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+.top-part2 {
+    margin-left: 50px;
+    margin-top: 30px;
+    margin-right: 50px;
+    height: 100px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.left-side-top2 {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+    
+}
+
+.check-out-title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: rgb(13, 8, 65);
+    
+}
+
+.left-side-in, .right-side-in{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.left-side-in{
+    margin-left: 15%;
+}
+.right-side-in{
+
+    gap: 40px;
+    width: 50%;
+}
+
+.treatment-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    width:85%;
+}
+
+.treatment-card{
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    justify-content: space-between;
+    width: 100%;
+    color: rgb(13, 8, 65);
+    background-color: #D9D9D9;
+    padding:10px;
+    text-align: left;
+}
+
+#delete-service{
+    padding: 15px;
+    display: flex;
+    flex: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+    margin-right: 10px;
+    background-color: transparent;
+    border-radius: 30px;
+    border: none;
+    color: #000000;
+    width:30px;
+    height: 30px;
+    font-size: 20px;
+}
+
+#delete-service:hover{
+    background-color: #acacac;
+    transition: 0.5s;
+    cursor: pointer;
+    color: white;
+}
+
+.treatment-left{
+    display: flex;
+    width: 75%;
+    margin-left: 5%;
+}
+
+#treatment-name{
+    width: 100%;
+    margin-top: 5px;
+}
+#treatment-price{
+    width: 100%;
+    margin-top: 5px;
+}
+.treatment-right{
+    width: 28%;
+    display: flex;
+    gap: 20px;
+}
+#divider{
+    margin-top: 5px;
+    color: #8f8c8c;
+    font-weight: bold;
+}
+.total-container{
+    width: 90%;
     display: flex;
     justify-content: right;
+
+}
+.total-card{
+    width: 30%;
+    background-color: #d9d9d9;
+    justify-content: center;
+    padding: 10px;
+    margin-left: 40px;
+    font-size: 20px;
+}
+
+/*new-patient*/
+.patient-info,.patient-info-ad,.patient-info1{
+    border-top: none;
+    border-left:none;
+    border-right:none ;
+    border-radius: 3px;
+    border-bottom: solid 1px #000000;
+    padding: 10px;
+    font-size:14PX;
+    font-family: 'Poppins', sans-serif;
+
+    
+   
+}
+.patient-info1{
+    width:20%;
+    text-align: center;
+}
+.patient-info{
+    width: 90%;
+}
+
+.info-patient3{
+    text-align: left;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.patient-info-ad{
+    width: 30%;
+}
+.address-input{
+    
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.medical-condition-card{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+
+.remove-condition{
+    border: none;
+    background-color: transparent;
+    border-radius: 100px;
+    color: #333;
+    font-weight: bold;
+    padding: 15px;
+    height: 10px;
+    display:flex;
+    align-items: center;
+}
+
+.remove-condition:hover{
+    background-color: #e73d3d;
+    color: white ;
+    transition:0.5s;
+    cursor: pointer;
+}
+
+.med-input{
+    width: 80%;
+    border-top:none;
+    border-right: none;
+    border-left: none;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 5px;
+    padding-left: 10px;
+
+}
+
+.curmed-input{
+    border-top:none;
+    border-right: none;
+    border-left: none;
+    border-radius: 5px;
+    background-color: transparent;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 5px;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.med-input:hover{
+    background-color: #bebebe;
+    transition:0.5s;
+    cursor: text;
+}
+.medical-hstry1,.medical-hstry2{
+    gap:10px
+}
+
+.add-condition{
+    border-radius:5px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+
+}
+
+.add-condition:hover{
+    background-color: #bb7c7c;
+    transition:0.5s;
+    cursor: pointer;
+}
+
+.medical-condition-card2{
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.save-profbtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    border-radius: 15px;
+    width: 87%;
+    
+    height: 40px;
+    padding: 1px 5px;
+    cursor: pointer;
+    background-color: #a1da91;
+    
+    color: #56754d ;
+}
+.save-profbtn:hover{
+    background-color: #56754d;
+    transition: 0.2s;
+}
+#save-profile:hover{
+    background-color: #56754d;
+    transition: 0.25s;
+    color:white;
+
+    
+}
+#save-profile{
+    color: #56754d ;
+    font-family: 'Poppins', sans-serif;
+    background-color: transparent;
+    border: none;
+    width:100%;
+    font-weight: bold;
+
+}
+
+.service-title-container{
+    margin-top:5px;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.remarks-text{
+
 }

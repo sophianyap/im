@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>Patient Information</title>
+</head>
+
+<body>
+    <div class="top-part">
+        <div class="left-side-top">
+            <a href="/index.html">
+                <button id="home-button">
+                    <img id="go-home" src="/assets/back button.png" alt="back">
+                </button>
+            </a>
+            <h1 id="backto">Back to Home Page</h1>
+        </div>
+        
+    </div>
+    <div class="big-blue-bg">
+        <div class="photo">
+            <img id="photo-person" src="/assets/account_circle.png" alt="picture">
+        </div>
+        <div class="first-part">
+            <div class="first-line2">
+                
+                <form action="">
+                    
+                    
+                    <input type="text"id="patient-firstname" class="patient-info1" placeholder="First Name">
+                    
+                    <input type="text"id="patient-firstname" class="patient-info1" placeholder="Middle Name">
+                    
+                    <input type="text"id="patient-lastname" class="patient-info1"  placeholder="Last Name">
+                    
+                </form>
+                <div class="patient-id-title">
+                    <div>ID:</div>
+                    <div class="patient-id">
+                        123
+                    </div>
+                </div>
+
+                <div class="date-add">
+                    <div class="dt">Date Added:</div>
+                    <div class="date-added">[add date added]</div>
+                </div>
+            </div>
+        </div>
+        <div class="para-ma-side">
+            <div class="patient-information">
+                PATIENT INFORMATION
+            </div>
+        </div>
+        <div class="second-part">
+            <div class="info-box">
+                <div class="info-patient1">
+                    <form action="">
+                        <label for="patient-age" class="info-title">
+                            AGE:
+                        </label>
+                        <input type="text"id="patient-age" class="patient-info">
+                        
+                        <label for="patient-mobilenum" class="info-title">
+                            MOBILE NUMBER:
+                        </label>
+                        <input type="text"id="patient-mobilenum" class="patient-info">
+                        
+                    </form>
+                </div>
+                <div class="info-patient2">
+                    <form action="">
+                        <label for="patient-birthdate" class="info-title">
+                            BIRTHDATE:
+                        </label>
+                        <input type="text"id="patient-birthdate" class="patient-info">
+                        <label for="patient-occupation" class="info-title">
+                        OCCUPATION
+                        </label>
+                        <input type="text"id="patient-mobilenum" class="patient-info">
+                    </form>
+                </div>
+                <div class="info-patient2">
+                    <form action="">
+                        <label for="gender-title" class="info-title">
+                            SEX
+                        </label>
+                        <select name="gender" id="gender-title" class="patient-info" >
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        <label for="status-title" class="info-title">
+                            CIVIL STATUS:
+                        </label>
+                        <select name="civil-status" id="status-title" class="patient-info">
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                            <option value="widowed">Widowed</option>
+                            <option value="separated">Separated</option>
+                            <option value="annulled">Annulled</option>
+
+                        </select>
+                    </form>
+                </div>
+                
+            </div>
+            <div class="info-patient3">
+                <div class="infopt3-title">
+                    <div class="info-title">ADDRESS:</div>
+                    
+                </div>
+                <div class="address-input">
+                    <input type="text"id="patient-city"  placeholder="City" class="patient-info-ad">
+                    <input type="text"id="patient-brngy"  placeholder="Barangay"class="patient-info-ad">
+                    <input type="text"id="patient-street" placeholder="Street"class="patient-info-ad">
+                </div>
+            </div>
+        </div>
+        <div class="para-ma-side">
+            <div class="medical-history">
+                <a href="/patient-info/index.html"></a>
+                <button id="mh">
+                    MEDICAL HISTORY
+                </button>
+                </a>
+            </div>
+        </div>
+        <div class="third-part">
+            <div class="container1">
+                <div class="medical-hstry1">
+                    <div class="information">MEDICAL CONDITION</div>
+                    <div class="info-title1">
+                        <br>
+                        <div class="medical-condition-card">
+                            <button class="remove-condition">
+                                x
+                            </button>
+                            <input type="text" id="medical-condition" class="med-input">
+                        </div>
+                        
+                    </div>
+                    <button class="add-condition">
+                        + add another condition
+                    </button>
+                </div>
+                <div class="medical-hstry2">
+                    <div class="information">CURRENT MEDICATIONS</div>
+                    <div class="medical-condition-card2">
+                        <button class="remove-condition">
+                            x
+                        </button>
+                        <input type="text" id="medical-condition" class="curmed-input">
+                    </div>
+                    <button class="add-condition">
+                        + add more
+                    </button>
+                </div>
+                
+            </div>
+            
+
+        </div>
+        <div class="save-profbtn">
+            <button id="save-profile">
+                Save
+            </button></a>
+        </div>
