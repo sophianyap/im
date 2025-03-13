@@ -1,13 +1,22 @@
 function makePatientDiv(patient) {
-  // Create the patient card
-  const patientCard = document.createElement('div');
-  patientCard.className = 'patient-card';
+  // Create the container div
+  const patientContainer = document.createElement('div');
+  patientContainer.className = 'patient-container';
 
-  // Create the patient info section
+  // Create the anchor element
+  const patientCardArea = document.createElement('a');
+  patientCardArea.href = `/patient-info/index.html?patient-id=${patient.patient_id}`;
+  patientCardArea.className = 'patient-card-area';
+
+  // Create the button element
+  const patientCardButton = document.createElement('button');
+  patientCardButton.className = 'patient-card';
+
+  // Create the patient info div
   const patientInfo = document.createElement('div');
   patientInfo.className = 'patient-info';
 
-  // Create the first line with ID and name
+  // Create the first line div
   const firstLine = document.createElement('div');
   firstLine.className = 'first-line';
 
@@ -17,12 +26,12 @@ function makePatientDiv(patient) {
 
   const patientsName = document.createElement('div');
   patientsName.className = 'patients-name';
-  patientsName.textContent = `${patient.last_name}, ${patient.first_name}`;
+  patientsName.textContent = `${patient.last_name}, ${patient.first_name} ${patient.middle_name || ''}`;
 
   firstLine.appendChild(patientId);
   firstLine.appendChild(patientsName);
 
-  // Create the patient details section
+  // Create the patient details div
   const patientDetails = document.createElement('div');
   patientDetails.className = 'patient-details';
 
@@ -40,38 +49,27 @@ function makePatientDiv(patient) {
 
   const patientContact = document.createElement('span');
   patientContact.className = 'patient-contact';
-  // Format the contact number if needed
-  const formattedContact = patient.contact_number ? patient.contact_number.replace(/(\d{4})(\d{4})(\d{3})/, '$1 $2 $3') : '';
-  patientContact.textContent = formattedContact;
+  patientContact.textContent = patient.contact_number ? patient.contact_number.replace(/(\d{4})(\d{4})(\d{3})/, '$1 $2 $3') : '';
 
   patientDetails.appendChild(patientAge);
   patientDetails.appendChild(patientGender);
   patientDetails.appendChild(divider);
   patientDetails.appendChild(patientContact);
 
-  // Add the parts to the patient info
+  // Append the first line and patient details to the patient info
   patientInfo.appendChild(firstLine);
   patientInfo.appendChild(patientDetails);
 
-  // Create the arrow link
-  const patientLink = document.createElement('a');
-  patientLink.href = `/patient-info/index.html?patient-id=${patient.patient_id}`;
+  // Append the patient info to the button
+  patientCardButton.appendChild(patientInfo);
 
-  const arrow = document.createElement('div');
-  arrow.className = 'arrow';
+  // Append the button to the anchor
+  patientCardArea.appendChild(patientCardButton);
 
-  const arrowBtn = document.createElement('button');
-  arrowBtn.style.fontWeight = 'bold';
-  arrowBtn.textContent = '>';
+  // Append the anchor to the container
+  patientContainer.appendChild(patientCardArea);
 
-  arrow.appendChild(arrowBtn);
-  patientLink.appendChild(arrow);
-
-  // Assemble the patient card
-  patientCard.appendChild(patientInfo);
-  patientCard.appendChild(patientLink);
-
-  return patientCard;
+  return patientContainer;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -96,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
       totalNo.innerHTML = data.length;
 
       // Get the container where patients will be displayed
-      const mainContainer = document.getElementById("patient-container"); // Replace with your actual container ID
+      const mainContainer = document.querySelector(".patient-container"); // Replace with your actual container ID
 
       // Clear existing content if needed
       mainContainer.innerHTML = '';

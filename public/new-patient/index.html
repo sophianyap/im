@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles.css">
@@ -8,7 +7,6 @@
     <title>New Patient</title>
     <link rel="icon" type="image/png" href="assets/dentistry.png">
 </head>
-
 <body>
     <div class="top-part">
         <div class="left-side-top">
@@ -19,7 +17,6 @@
             </a>
             <h1 id="backto">Back to Home Page</h1>
         </div>
-        
     </div>
     <div class="big-blue-bg">
         <div class="photo">
@@ -27,28 +24,11 @@
         </div>
         <div class="first-part">
             <div class="first-line2">
-                
                 <form action="">
-                    
-                    
-                    <input type="text"id="patient-firstname" class="patient-info1" placeholder="First Name">
-                    
-                    <input type="text"id="patient-firstname" class="patient-info1" placeholder="Middle Name">
-                    
-                    <input type="text"id="patient-lastname" class="patient-info1"  placeholder="Last Name">
-                    
+                    <input type="text" id="patient-firstname" class="patient-info1" placeholder="First Name">
+                    <input type="text" id="patient-middlename" class="patient-info1" placeholder="Middle Name">
+                    <input type="text" id="patient-lastname" class="patient-info1" placeholder="Last Name">
                 </form>
-                <div class="patient-id-title">
-                    <div>ID:</div>
-                    <div class="patient-id">
-                        123
-                    </div>
-                </div>
-
-                <div class="date-add">
-                    <div class="dt">Date Added:</div>
-                    <div class="date-added">[add date added]</div>
-                </div>
             </div>
         </div>
         <div class="para-ma-side">
@@ -67,7 +47,7 @@
                         <label for="patient-occupation" class="info-title">
                             OCCUPATION:
                             </label>
-                            <input type="text"id="patient-mobilenum" class="patient-info">
+                            <input type="text"id="patient-occupation" class="patient-info">
                     </form>
                 </div>
                 <div class="info-patient2">
@@ -87,35 +67,32 @@
                         <label for="gender-title" class="info-title">
                             SEX
                         </label>
-                        <select name="gender" id="gender-title" class="patient-info" >
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                        <select name="gender" id="gender-title" class="patient-info">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </select>
                         <label for="status-title" class="info-title">
                             CIVIL STATUS:
                         </label>
                         <select name="civil-status" id="status-title" class="patient-info">
-                            <option value="single">Single</option>
-                            <option value="married">Married</option>
-                            <option value="widowed">Widowed</option>
-                            <option value="separated">Separated</option>
-                            <option value="annulled">Annulled</option>
-
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Widowed">Widowed</option>
+                            <option value="Separated">Separated</option>
+                            <option value="Annulled">Annulled</option>
                         </select>
                         
                     </form>
                 </div>
-                
             </div>
             <div class="info-patient3">
                 <div class="infopt3-title">
                     <div class="info-title">ADDRESS:</div>
-                    
                 </div>
                 <div class="address-input">
-                    <input type="text"id="patient-city"  placeholder="City" class="patient-info-ad">
-                    <input type="text"id="patient-brngy"  placeholder="Barangay"class="patient-info-ad">
-                    <input type="text"id="patient-street" placeholder="Street"class="patient-info-ad">
+                    <input type="text" id="patient-city" placeholder="City" class="patient-info-ad">
+                    <input type="text" id="patient-brngy" placeholder="Barangay" class="patient-info-ad">
+                    <input type="text" id="patient-street" placeholder="Street" class="patient-info-ad">
                 </div>
             </div>
         </div>
@@ -140,7 +117,6 @@
                             </button>
                             <input type="text" id="medical-condition" class="med-input">
                         </div>
-                        
                     </div>
                     <button class="add-condition">
                         + add another condition
@@ -158,13 +134,14 @@
                         + add more
                     </button>
                 </div>
-                
             </div>
-            
-
         </div>
         <div class="save-profbtn">
             <button id="save-profile">
                 Save
-            </button></a>
+            </button>
         </div>
+    </div>
+    <script src="new-patient-script.js"></script>
+</body>
+</html>
