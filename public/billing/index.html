@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <title>Checkout</title>
+    <link rel="icon" type="image/png" href="assets\dentistry.png">
+
+</head>
+<body>
+    <div class="check-out-top">
+        <div class="left-side-top2">
+            <a href="/new-session/index.html">
+                <button id="home-button">
+                    <img id="go-home" src="/assets/back button.png" alt="back">
+                </button>
+            </a>
+        </div>
+        <div class="center-top">
+            <h1 class="new-ds">BILLINGS <br>& PRESCRIPTION</h1>
+            <p class="date-today-ds">Friday- March 07, 2025</p>
+        </div>
+    </div>
+    <div class="billing-container">
+        <h2>BILLING SUMMARY</h2>
+        <table class="billing-table">
+            <thead>
+                <tr>
+                    <th>Service Name</th>
+                    <th>Total Fee</th>
+                    <th>Amount Tendered</th>
+                    <th>Balance</th>
+                    <th>Payment Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-row">
+                    <td class="table-data">TOOTH FILLING</td>
+                    <td class="table-data">₱<input id="treatment-fee" class="input-billing" placeholder="0.00"></td>
+                    <td class="table-data">₱<input id="treatment-fee" class="input-billing" placeholder="0.00"></td>
+                    <td class="table-data">₱1,000</td>
+                    <td class="table-data"><select name="service" id="status">
+                        <option value="">PAID</option>
+                        <option value="">UNPAID</option>
+                    </select></td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="billing-container">
+        <h2>PRESCRIPTION</h2>
+        <table class="billing-table">
+            <thead>
+                <tr>
+                    <th>Medication</th>
+                    <th>Dosage</th>
+                    <th>Frequency & Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-row">
+                    <td class="table-data"><input id="medication-name" class="input-billing" ></td>
+                    <td class="table-data"><input id="medication-dosage" class="input-billing" ></td>
+                    <td class="table-data"><input id="medication-frequency-duration" class="input-billing"></td>
+                </tr>
+                
+            </tbody>
+        </table>
+        <button id="add-prescription"class="add-pbtn"> + add prescription </button>
+        <button id="save-data" class="save-data-btn">
+            SAVE DATA
+        </button>
+    </div>
+    
+    </div>
+    
+    
+</body>

@@ -5,61 +5,97 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <title>Dental Clinic</title>
+    <link rel="icon" type="image/png" href="assets\dentistry.png">
+">
 </head>
 <body>
     <div class="page-container">
-        <nav>
-            <a href="#home"></a>
-        </nav>
+        
         <div class="title-container">
             <section id="home">
                 <div class="title-area">
-                    <img src="/assets/dentistry.png" alt="Dentistry Logo">
-                    <h1 id="home-name">Welcome, <br>Doc. Keian!</h1>
+                    <img src="/assets/clinic-logo.png" alt="Dentistry Logo">
+                    <h1 id="home-name">Cascabel-Pacquing<br> Dental Clinic</h1>
                     <hr>
                 </div>
-                <div class="search-box">
-                    <input type="text" placeholder="SEARCH PATIENT">
-                    <button type="submit">
-                        <img id="search" src="/assets/search.png" alt="search">
-                    </button>
+                <div class="dashboard-container">
+                    <h2 id="homepage-title">DASHBOARD</h2>
+                    <div class="dashboard-dashboard">
+                        <div class="number-of-patients">
+                            <div class="inside-np">
+                                <div id="total-no">188</div>
+                                <img id="patients" src="/assets/accessibility_new.png">
+                                <div id="patient-number">TOTAL NO. OF PATIENTS</div>
+                            </div>
+                        </div>
+                        <div class="number-of-patients">
+                            <div class="inside-np">
+                                <div id="total-no">10</div>
+                                <img id="patients" src="/assets/accessibility_new.png">
+                                <div id="patient-number">NEW PATIENTS THIS MONTH</div>
+                            </div>
+                        </div>
+                        <div class="number-of-patients">
+                            <div class="inside-np">
+                                <div id="total-no">2</div>
+                                <img id="patients" src="/assets/accessibility_new.png">
+                                <div id="patient-number">BIRTHDAYS THIS MONTH</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="patients-container-area">
+                    <h2 id="homepage-title">PATIENTS</h2>
+                    <div class="patient-line">
+                        <div class="search-box">
+                            <input type="text" placeholder="SEARCH PATIENT">
+                            <button type="submit">
+                                <img id="search" src="/assets/search.png" alt="search">
+                            </button>
+                        </div>
+                        <a href="new-patient\index.html">
+                            <button id="add-button">
+                                +
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                <div class="patient-container" >
+                    <a href="/patient-info/index.html?patient-id=123" class="patient-card-area">
+                        <button class="patient-card">
+                            <div class="patient-info">
+                                <div class="first-line">
+                                    <div class="patient-id">123</div>
+                                    <div class="patients-name">LAST NAME, First Name</div>
+                                </div>
+                                <div class="patient-details">
+                                    <span class="patient-age">20</span>
+                                    <span class="patient-gender">F</span>
+                                    <span class="divider">|</span>
+                                    <span class="patient-contact">0912 3456 789</span>
+                                </div>
+                                
+                            </div>
+                            
+                        </button>
+                        
+                    </a>
+                    
+                        
+                            
+                        
+                    </div>
                 </div>
             </section>
-            <a href="new-patient\index.html">
-                <button id="add-button">
-                    +
-                </button>
-            </a>
-            <div class="number-of-patients">
-                <div class="inside-np">
-                    <div id="total-no">188</div>
-                    <img id="patients" src="/assets/accessibility_new.png">
-                    <div id="patient-number">TOTAL NO. OF PATIENTS</div>
-                </div>
-            </div>
         </div>
+        
     </div>
-    <div class="patient-container" id="patient-container">
-        <div class="patient-card">
-            <div class="patient-info">
-                <div class="first-line">
-                    <div class="patient-id">123</div>
-                    <div class="patients-name">LAST NAME, First Name</div>
-                </div>
-                <div class="patient-details">
-                    <span class="patient-age">20</span>
-                    <span class="patient-gender">F</span>
-                    <span class="divider">|</span>
-                    <span class="patient-contact">0912 3456 789</span>
-                </div>
-            </div>
-            <a href="/patient-info/index.html?patient-id=123">
-                <div class="arrow">
-                    <button style="font-weight: bold;">>            </button>
-                </div>
-            </a>
-        </div>
-    </div>
-    <script src="home-script.js"></script>
+    
+    
+    
+    
+   
+    
+    <!-- <script src="home-script.js"></script> -->
 </body>
 </html>
