@@ -45,7 +45,9 @@
                     <button id="delete-service">
                         x
                     </button>
-                    <select name="service" id="service">
+                    <input class="tooth-input" placeholder="Tooth"> 
+                    <select name="service" id="service" aria-placeholder="SERVICE">
+                        <option value="" disabled selected>SERVICE</option>
                         <option value="tooth_filling">TOOTH FILLING</option>
                         <option value="tooth_cleaning">TOOTH CLEANING</option>
                         <option value="braces">BRACES</option>
@@ -78,9 +80,10 @@
 
 
                 <div class="final-remarks-text">
-                    <h3>REMARKS:</h3>
-                    <form  class="remarks-c">
-                        <input id="input-final" type="text">
+                    <h3 id="remark"
+                    >REMARKS:</h3>
+                    <form  class="remarks-text">
+                        <input id="remarks-text-input" type="text">
                     </form>
                 </div>
                 <div class="bottom-line">

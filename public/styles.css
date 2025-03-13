@@ -513,7 +513,6 @@ img {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     margin-bottom: -10px;
-    /* Overlaps the box border */
 }
 
 .ser-container,
@@ -594,7 +593,7 @@ img {
 .info-patient3 {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 30%;
     padding-bottom: 10px;
     flex-direction: column;
     gap: 5px;
@@ -605,6 +604,7 @@ img {
     font-size: 80%;
     color: #585858;
     font-weight: bold;
+    width: inherit;
 }
 
 .information {
@@ -768,12 +768,12 @@ img {
     align-items: center;
     width: 90%;
     height: 100%;
-    background-color: #304b78;
+    background-color:   #304b78;
     margin: 40px auto;
     border-radius: 10px;
     flex-direction: column;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 4c0px;
     gap: 10px;
 }
 .top-part2 {
@@ -910,13 +910,9 @@ img {
     gap:10px;
 }
 
-#service-input{
-    border: none;
-    background-color: transparent;
-    font-family: 'Poppins', sans-serif;
-    font-size: 16px;
-    background: #d9d9d9;
-
+#remark{
+    margin-left: 20px;
+    display: flex;
 }
 
 .service-line{
@@ -926,6 +922,21 @@ img {
     padding: 10px;
     width: 102%;
     justify-content: space-between;
+    gap: 5px;
+}
+.tooth-input{
+    border-top: none;
+    border-right: none;
+    border-left:none;
+    border-radius: 5px;
+    background-color: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    background: #d9d9d9;
+    width: 20%;
+    padding: 10px;
+    color: black;
+
 }
 
 #remarks,
@@ -957,45 +968,52 @@ img {
 }
 
 #final-remarks{
-    width:105%;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    padding: 10px;
     height:100%;
+    
     border-radius: 10px;
     background-color: rgb(216, 213, 213);
-    border: #333;
 }
 
 .final-remarks-text{
     display: flex;
-    flex-direction: row;
-    width: 90%;
-    gap:40px;
+    flex-direction: column;
+
     width:102%;
-    height:100%;
+    height:auto;
     border-radius: 10px;
-    padding-left:20px;
     color: #5c5c5c;
     background-color: #0000003f;
 }
-
-#input-final{
-    font-family: 'Poppins', sans-serif;
-    text-align: right;
-    border: black;
-    width: 90%;
-    padding-right:20px;
-    font-size: 20px;
+#remarks-text-input{
     background-color: transparent;
-    width: 90%;
+    border: none;
+    width: 95%;
     height: 100%;
-    padding:20px
-
-
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #333;
+}
+#remarks-text-input:hover{
+    background-color: #b4b3b3;
+    transition:0.5s;
+    
+}
+.remarks-text{
+    padding: 10px;
+    font-size: 15px;
 }
 
 .remarks-c{
-    padding:20px ;
+
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 .img-remark{
@@ -1139,6 +1157,7 @@ img {
     background-color: #D9D9D9;
     padding:10px;
     text-align: left;
+    border-radius: 5px;
 }
 
 #delete-service{
@@ -1177,12 +1196,19 @@ img {
 }
 #treatment-price{
     width: 100%;
-    margin-top: 5px;
+    margin-left: 10px;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right:none;
+    border-radius: 5px;
+    padding-left: 10px;
+    font-size: 15px;
 }
 .treatment-right{
     width: 28%;
     display: flex;
-    gap: 20px;
+    
 }
 #divider{
     margin-top: 5px;
@@ -1364,7 +1390,44 @@ img {
     align-items: center;
     margin-left: 10px;
 }
+.infopt3-title2{
+    display: flex;
+    flex-direction:row;
+    gap: 20px;
+    justify-content: left;
+    align-items: left;
+    width: 100%;
+
+}
+
+.address-info{
+    display:flex;
+    gap:10px;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.address-stuff{
+    width:30%;
+
+}
+
+.sec0nd-part{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+.medications-area{
+    background-color: rgb(184, 241, 220);
+    width:80%;
+    border-radius:10PX ;
+    padding: 50px;
+}
 
 .remarks-text{
-
+    height: auto;
 }
