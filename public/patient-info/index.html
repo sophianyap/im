@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <title>Patient Information</title>
 </head>
+
 <body>
+    <div id="loading-overlay">
+        <section class="dots-container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </section>
+    </div>
     <div class="top-part">
         <div class="left-side-top">
             <a href="/">
@@ -65,7 +76,7 @@
                         <div class="info-title">MOBILE NUMBER:</div>
                         <div class="information">0912 345 6789</div>
                     </div>
-                    
+
                 </div>
                 <div class="info-patient2">
                     <div class="info-age">
@@ -78,7 +89,7 @@
 
                     </div>
 
-                    
+
                 </div>
                 <div class="info-patient2">
                     <div class="info-age">
@@ -91,45 +102,53 @@
                         <div class="information">Mapua MCM</div>
 
                     </div>
-                    
-            
+
+
+                </div>
+                
             </div>
-    <div class="infopt3-title2">
-
-                <div class="info-title">ADDRESS:</div>
-                <div class="address-info">
-                    <div class="address-stuff">
-                        <div class="info-title">CITY:</div>
-                        <div id="city" class="information">Davao</div>
-
+            <div class="hello-world-area">
+                <div class="infopt3-title2">
+                    <div class="info-age">
+                        <div class="info-title">CIVIL STATUS:</div>
+                        <div class="information">Single</div>
                     </div>
-                    <div>
-                        <div class="info-title">BARANGAY:</div>
-
-                        <div  id="barangay" class="information">Angliongto </div>
-                    </div>
-                    <div>
-                        <div class="info-title">STREET:</div>
-
-                        <div id="street" class="information">Diamond St.</div>
-                    </div>
+                    
                 </div>
-                <div class="info-age">
-                    <div class="info-title">CIVIL STATUS:</div>
-                    <div class="information">Single</div>
+                <div class="infopt3-title1">
+                    <div class="info-title">ADDRESS:</div>
+                    <div class="address-info">
+                        <div class="address-stuff">
+                            <div>
+                                <div class="info-title">CITY:</div>
+                            <div id="city" class="information">Zamboanga</div>
+                            </div>
+                            <div>
+                                <div class="info-title">BARANGAY:</div>
+                                <div id="barangay" class="information">Angliongto hongkong</div>
+                        
+                            </div>
+                        
+                            <div>
+                                <div class="info-title">STREET:</div>
+    
+                            <div id="street" class="information">imong mama university</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <br>
                 </div>
-                <br> 
-            </div>   
-        </div> 
+            </div>
         </div>
         <div class="para-ma-side">
             <div class="medical-history">
-                <a href="/patient-info/" ></a>
-                    <button id="mh">
-                        MEDICAL HISTORY
-                    </button>
+                <a href="/patient-info/"></a>
+                <button id="mh">
+                    MEDICAL HISTORY
+                </button>
                 </a>
-        </div>
+            </div>
         </div>
         <div class="third-part">
             <div class="container1">
@@ -159,7 +178,7 @@
                     <a href="/edit-profile/">
                         <button id="edit-profile">
                             <img id="edit-icon" src="/assets/border_color.png" alt="edit">
-                        Edit</button></a>
+                            Edit</button></a>
                 </div>
             </div>
         </div>
@@ -190,11 +209,11 @@
                         <a href="/appt-history/">
                             <div class="apt-arrow">
                                 <p style="color: black;">SEE MORE INFO</p>
-                                <button style="font-weight: bold;">>            </button>
+                                <button style="font-weight: bold;">> </button>
                             </div>
                         </a>
                     </div>
-                    
+
                 </div>
                 <div class="lower-container">
                     <a href="/new-session/" id="add-button-appt">
@@ -205,7 +224,7 @@
                         <a href="/edit-profile/">
                             <button id="edit-profile">
                                 <img id="edit-icon" src="/assets/border_color.png" alt="edit">
-                            Edit</button></a>
+                                Edit</button></a>
                     </div>
                 </div>
             </div>
@@ -215,4 +234,5 @@
     </div>
     <script src="patient-info-script.js"></script>
 </body>
+
 </html>

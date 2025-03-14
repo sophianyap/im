@@ -58,7 +58,7 @@ document.getElementById('save-profile').addEventListener('click', async () => {
         firstName: document.getElementById('patient-firstname').value,
         middleName: document.getElementById('patient-middlename').value,
         lastName: document.getElementById('patient-lastname').value,
-        mobileNumber: document.getElementById('patient-mobilenum').value,
+        mobileNumber: document.getElementById('patient-mobile').value,
         birthDate: document.getElementById('patient-birthdate').value,
         occupation: document.getElementById('patient-occupation').value,
         gender: document.getElementById('gender-title').value,

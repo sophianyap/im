@@ -8,9 +8,18 @@
     <link rel="icon" type="image/png" href="assets/dentistry.png">
 </head>
 <body>
+    <div id="loading-overlay">
+        <section class="dots-container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </section>
+    </div>
     <div class="top-part">
         <div class="left-side-top">
-            <a href="/index.html">
+            <a href="/index.html"  id="home-button">
                 <button id="home-button">
                     <img id="go-home" src="/assets/back button.png" alt="back">
                 </button>
@@ -43,7 +52,7 @@
                         <label for="patient-mobilenum" class="info-title">
                             MOBILE NUMBER:
                         </label>
-                        <input type="text"id="patient-mobilenum" class="patient-info">
+                        <input type="tel"id="patient-mobile" class="patient-info">
                         <label for="patient-occupation" class="info-title">
                             OCCUPATION:
                             </label>
@@ -83,18 +92,22 @@
                         </select>
                         
                     </form>
+                    
                 </div>
             </div>
-            <div class="info-patient3">
-                <div class="infopt3-title">
-                    <div class="info-title">ADDRESS:</div>
-                </div>
-                <div class="address-input">
-                    <input type="text" id="patient-city" placeholder="City" class="patient-info-ad">
-                    <input type="text" id="patient-brngy" placeholder="Barangay" class="patient-info-ad">
-                    <input type="text" id="patient-street" placeholder="Street" class="patient-info-ad">
+            <div class="address-container"> 
+                <div class="info-patient3">
+                    <div class="infopt3-title">
+                        <div class="info-title">ADDRESS:</div>
+                    </div>
+                    <div class="address-input">
+                        <input type="text" id="patient-city" placeholder="City" class="patient-info-ad">
+                        <input type="text" id="patient-brngy" placeholder="Barangay" class="patient-info-ad">
+                        <input type="text" id="patient-street" placeholder="Street" class="patient-info-ad">
+                    </div>
                 </div>
             </div>
+            
         </div>
         <div class="para-ma-side">
             <div class="medical-history">

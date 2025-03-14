@@ -1,236 +1,153 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <title>Edit Patient Profile</title>
-    <style>
-        .edit-form-container {
-            padding: 20px;
-            background-color: #f5f5f5;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        
-        .form-section {
-            margin-bottom: 20px;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .form-section h2 {
-            color: #0066cc;
-            margin-top: 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            margin: 0 -10px;
-        }
-        
-        .form-group {
-            flex: 1 0 250px;
-            padding: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .list-container {
-            margin-top: 20px;
-        }
-        
-        .list-item {
-            display: flex;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        
-        .list-item input {
-            flex: 1;
-            margin-right: 10px;
-        }
-        
-        .list-item .remove-btn {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        .add-btn {
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        
-        .form-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-            gap: 10px;
-        }
-        
-        .save-btn {
-            background-color: #0066cc;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .cancel-btn {
-            background-color: #f5f5f5;
-            color: #333;
-            border: 1px solid #ddd;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
+
+
 </head>
+
 <body>
+    <div id="loading-overlay">
+        <section class="dots-container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </section>
+    </div>
     <div class="top-part">
         <div class="left-side-top">
-            <a href="/patient-info/" id="back-link">
+            <a href="/patient-info/index.html" id="home-button">
                 <button id="home-button">
-                    <img id="go-home" src="/assets/back button.png" alt="back">
+                    <img id="go-home" src="/assets/back button.png" alt="">
                 </button>
             </a>
             <h1 id="backto">Back to Patient Information</h1>
         </div>
     </div>
-    
-    <div class="edit-form-container">
-        <form id="edit-patient-form">
-            <div class="form-section">
-                <h2>Patient Information</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="patient-last-name">Last Name</label>
-                        <input type="text" id="patient-last-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="patient-first-name">First Name</label>
-                        <input type="text" id="patient-first-name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="patient-middle-name">Middle Name</label>
-                        <input type="text" id="patient-middle-name" required>
-                    </div>
+    <div class="big-blue-bg">
+        <div class="photo">
+            <img id="photo-person" src="/assets/account_circle.png" alt="picture">
+        </div>
+        <div class="first-part">
+            <div class="first-line2">
+
+                <input type="text" class="patient-info1" id="patient-last-name" required placeholder="Last Name">
+                ,<input type="text" class="patient-info1" id="patient-first-name" required placeholder="First Name">
+                <input type="text" class="patient-info1" id="patient-middle-name" required placeholder="Middle Name">
+
+            </div>
+        </div>
+        <div class="para-ma-side">
+            <div class="patient-information">
+                PATIENT INFORMATION
+            </div>
+        </div>
+        <div class="second-part">
+            <div class="info-box">
+                <div class="info-patient1">
+                    <label class="info-title" for="patient-mobile" >MOBILE NUMBER</label>
+                    <input type="tel" id="patient-mobile" class="patient-info">
+                    <label for="patient-occupation" class="info-title">OCCUPATION:</label>
+                    <input type="text" id="patient-occupation" class="patient-info">
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="patient-mobile">Mobile Number</label>
-                        <input type="tel" id="patient-mobile">
-                    </div>
-                    <div class="form-group">
-                        <label for="patient-birthdate">Birthdate</label>
-                        <input type="date" id="patient-birthdate">
-                    </div>
+                <div class="info-patient2">
+
+                    <label for="patient-birthdate" class="info-title">
+                        BIRTHDATE:
+                    </label>
+                    <input type="date" id="patient-birthdate" class="patient-info">
+                    <label for="patient-company" class="info-title">
+                        COMPANY:
+                    </label>
+                    <input type="text" id="patient-company" class="patient-info">
+
                 </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="patient-gender">Sex</label>
-                        <select id="patient-gender">
-                            <option value="">Select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                        </select>
+                <div class="info-patient2">
+
+                    <label for="gender-title" class="info-title">
+                        SEX
+                    </label>
+                    <select name="gender" id="gender-title" class="patient-info">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <label for="status-title" class="info-title">
+                        CIVIL STATUS:
+                    </label>
+                    <select name="civil-status" id="status-title" class="patient-info">
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Widowed">Widowed</option>
+                        <option value="Separated">Separated</option>
+                        <option value="Annulled">Annulled</option>
+                    </select>
+                </div> 
+            </div>
+            <div class="address-container"> 
+                <div class="info-patient3">
+                    <div class="infopt3-title">
+                        <div class="info-title">ADDRESS:</div>
                     </div>
-                    <div class="form-group">
-                        <label for="patient-occupation">Occupation</label>
-                        <input type="text" id="patient-occupation">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="patient-company">Company</label>
-                        <input type="text" id="patient-company">
-                    </div>
-                    <div class="form-group">
-                        <label for="patient-civil-status">Civil Status</label>
-                        <select id="patient-civil-status">
-                            <option value="">Select</option>
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Divorced">Divorced</option>
-                            <option value="Widowed">Widowed</option>
-                        </select>
+                    <div class="address-input">
+                        <input type="text" id="patient-city" placeholder="City" class="patient-info-ad">
+                        <input type="text" id="patient-barangy" placeholder="Barangay" class="patient-info-ad">
+                        <input type="text" id="patient-street" placeholder="Street" class="patient-info-ad">
                     </div>
                 </div>
             </div>
-            
-            <div class="form-section">
-                <h2>Address Information</h2>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="patient-city">City</label>
-                        <input type="text" id="patient-city">
-                    </div>
-                    <div class="form-group">
-                        <label for="patient-barangay">Barangay</label>
-                        <input type="text" id="patient-barangay">
-                    </div>
-                    <div class="form-group">
-                        <label for="patient-street">Street</label>
-                        <input type="text" id="patient-street">
-                    </div>
-                </div>
+
+
+        </div>
+        <div class="para-ma-side">
+            <div class="medical-history">
+                <a href="/patient-info/index.html"></a>
+                <button id="mh">
+                    MEDICAL HISTORY
+                </button>
+                </a>
             </div>
-            
-            <div class="form-section">
-                <h2>Medical History</h2>
-                <div class="list-container">
-                    <label>Medical Conditions</label>
-                    <div id="conditions-list"></div>
-                    <button type="button" id="add-condition" class="add-btn">Add Condition</button>
+        </div>
+        <div class="third-part">
+            <div class="container1">
+                <div class="medical-hstry1">
+                    <div class="information">MEDICAL CONDITION</div>
+                    <div class="info-title1">
+                        <br>
+                        <div id="conditions-list"></div>
+
+                    </div>
+                    <button class="add-condition" id="add-condition">
+                        + add another condition
+                    </button>
                 </div>
-                
-                <div class="list-container">
-                    <label>Current Medications</label>
+                <div class="medical-hstry2">
+                    <div class="information">CURRENT MEDICATIONS</div>
                     <div id="medications-list"></div>
-                    <button type="button" id="add-medication" class="add-btn">Add Medication</button>
+                    
+                    <button class="add-condition" id="add-medication">
+                        + add more
+                    </button>
                 </div>
             </div>
-            
-            <div class="form-actions">
-                <button type="button" id="cancel-edit" class="cancel-btn">Cancel</button>
-                <button type="submit" class="save-btn">Save Changes</button>
-            </div>
-        </form>
+        </div>
+        <div class="form-actions">
+            <button type="button" id="cancel-edit" class="cancel-btn">Cancel</button>
+            <button type="submit" class="save-profile-btn">Save Changes</button>
+        </div>
+        
     </div>
+
     
+    </form>
+    </div>
+
     <script src="edit-profile-script.js"></script>
 </body>
+
 </html>
