@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.4.32
+    container_name: happyteeth-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: db_happyteeth
+      MARIADB_USER: dbuser
+      MARIADB_PASSWORD: dbpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./resources:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: happyteeth-app
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DB_HOST: mariadb
+      DB_USER: dbuser
+      DB_PASSWORD: dbpassword
+      STARTUP_DELAY: 15
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    command: >
+      sh -c "
+        echo 'Waiting for MySQL to be ready...'
+        sleep $$STARTUP_DELAY
+        node index.js
+      "
+
+volumes:
+  mysql-data:
+    driver: local

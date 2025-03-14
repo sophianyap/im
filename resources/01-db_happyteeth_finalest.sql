@@ -1,3 +1,12 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Mar 14, 2025 at 11:20 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -24,6 +33,13 @@ CREATE TABLE `tbl_address` (
   `barangay_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_address`
+--
+
+INSERT INTO `tbl_address` (`address_id`, `address_street_name`, `barangay_id`) VALUES
+(0, 'Dona Luisa', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -36,6 +52,13 @@ CREATE TABLE `tbl_barangay` (
   `city_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_barangay`
+--
+
+INSERT INTO `tbl_barangay` (`barangay_id`, `barangay_name`, `city_id`) VALUES
+(0, 'Toril', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -46,6 +69,13 @@ CREATE TABLE `tbl_city` (
   `city_id` int(11) NOT NULL,
   `city_name` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_city`
+--
+
+INSERT INTO `tbl_city` (`city_id`, `city_name`) VALUES
+(0, 'Davao City');
 
 -- --------------------------------------------------------
 
@@ -60,6 +90,13 @@ CREATE TABLE `tbl_dentist` (
   `license_number` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_dentist`
+--
+
+INSERT INTO `tbl_dentist` (`dentist_id`, `person_id`, `dentist_specialization`, `license_number`) VALUES
+(0, 0, 'Orthodontics', 'DN-1234567');
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +107,14 @@ CREATE TABLE `tbl_gender` (
   `gender_id` int(11) NOT NULL,
   `gender_title` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_gender`
+--
+
+INSERT INTO `tbl_gender` (`gender_id`, `gender_title`) VALUES
+(0, 'Male'),
+(1, 'Female');
 
 -- --------------------------------------------------------
 
@@ -139,6 +184,13 @@ CREATE TABLE `tbl_occupation` (
   `occupation_title` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_occupation`
+--
+
+INSERT INTO `tbl_occupation` (`occupation_id`, `occupation_title`) VALUES
+(0, 'General Dentist');
+
 -- --------------------------------------------------------
 
 --
@@ -159,7 +211,7 @@ CREATE TABLE `tbl_patient` (
 
 CREATE TABLE `tbl_patient_tooth_chart` (
   `patient_id` int(11) NOT NULL,
-  `tooth_chart` LONGBLOB DEFAULT NULL,
+  `tooth_chart` longblob DEFAULT NULL,
   `patienttooth_remarks` text DEFAULT NULL,
   `date_added` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -183,6 +235,13 @@ CREATE TABLE `tbl_person` (
   `person_company` text DEFAULT NULL,
   `contact_number` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_person`
+--
+
+INSERT INTO `tbl_person` (`person_id`, `person_last_name`, `person_first_name`, `person_middle_name`, `person_birthdate`, `gender_id`, `status_id`, `occupation_id`, `address_id`, `person_company`, `contact_number`) VALUES
+(0, 'Pacquing', 'Catherine', 'Cascabel', '1977-10-27', 1, 0, 0, 0, 'Cascabel Dental Clinic', '0951 378 5324');
 
 -- --------------------------------------------------------
 
@@ -225,6 +284,23 @@ CREATE TABLE `tbl_services_offered` (
   `service_offered_name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tbl_services_offered`
+--
+
+INSERT INTO `tbl_services_offered` (`service_offered_id`, `service_offered_name`) VALUES
+(1, 'ROOT CANAL THERAPY'),
+(2, 'TOOTH EXTRACTION'),
+(3, 'DENTURES'),
+(4, 'VENEERS'),
+(5, 'DENTAL CLEANING'),
+(6, 'COMPOSITE FILLING'),
+(7, 'TOOTH WHITENING'),
+(8, 'CERAMIC CROWNS'),
+(9, 'DENTAL IMPLANTS'),
+(10, 'ORTHODONTICS'),
+(11, 'ZIRCONIA CROWNS');
+
 -- --------------------------------------------------------
 
 --
@@ -237,7 +313,7 @@ CREATE TABLE `tbl_session` (
   `dentist_id` int(11) DEFAULT NULL,
   `session_date` date DEFAULT NULL,
   `session_remarks` text DEFAULT NULL,
-  `session_remarks_image` LONGBLOB DEFAULT NULL,
+  `session_remarks_image` longblob DEFAULT NULL,
   `session_time_start` time DEFAULT NULL,
   `session_time_end` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -252,6 +328,16 @@ CREATE TABLE `tbl_status` (
   `status_id` int(11) NOT NULL,
   `status_title` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_status`
+--
+
+INSERT INTO `tbl_status` (`status_id`, `status_title`) VALUES
+(0, 'Single'),
+(1, 'Widowed'),
+(2, 'Separated'),
+(3, 'Annulled');
 
 --
 -- Indexes for dumped tables
@@ -419,7 +505,7 @@ ALTER TABLE `tbl_dentist`
 -- AUTO_INCREMENT for table `tbl_gender`
 --
 ALTER TABLE `tbl_gender`
-  MODIFY `gender_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `gender_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_medical_condition`
@@ -479,7 +565,7 @@ ALTER TABLE `tbl_service`
 -- AUTO_INCREMENT for table `tbl_services_offered`
 --
 ALTER TABLE `tbl_services_offered`
-  MODIFY `service_offered_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `service_offered_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_session`
@@ -491,7 +577,7 @@ ALTER TABLE `tbl_session`
 -- AUTO_INCREMENT for table `tbl_status`
 --
 ALTER TABLE `tbl_status`
-  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
