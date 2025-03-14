@@ -11,15 +11,7 @@
 </head>
 
 <body>
-    <<div id="loading-overlay">
-        <section class="dots-container">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </section>
-    </div>
+    
 
     
     <div class="check-out-top">
@@ -50,8 +42,8 @@
             <tbody>
                 <tr class="table-row">
                     <td class="table-data">TOOTH FILLING</td>
-                    <td class="table-data">₱<input id="treatment-fee" class="input-billing" placeholder="0.00"></td>
-                    <td class="table-data">₱<input id="treatment-fee" class="input-billing" placeholder="0.00"></td>
+                    <td class="table-data" id="service-fee"></td>
+                    <td class="table-data" id="amount-tendered">₱<input id="amount-tendered" class="input-billing" placeholder="0.00"></td>
                     <td class="table-data">₱1,000</td>
                     <td class="table-data"><select name="service" id="status">
                         <option value="">PAID</option>
@@ -67,7 +59,6 @@
         <table class="billing-table">
             <thead>
                 <tr>
-                    <th class="tiny"></th>
                     <th>Medication</th>
                     <th>Dosage</th>
                     <th>Frequency & Duration</th>
@@ -76,20 +67,18 @@
             <tbody>
                 
                 <tr class="table-row">
-                    <td><button class="remove-prescription">
-                        x
-                    </button></td>
-                    <td class="table-data"><input id="medication-name" class="input-billing" ></td>
-                    <td class="table-data"><input id="medication-dosage" class="input-billing" ></td>
-                    <td class="table-data"><input id="medication-frequency-duration" class="input-billing"></td>
+                <td class="table-data" id="medication-name">
+                    <div id="medication-name">BIOGESIC</div>
+                </td>
+                    <td class="table-data" id="medication-dosage"><div id="medication-dosage">50mg</div></td>
+                    <td class="table-data" id="medication-frequency-duration">
+                        <div id="medication-frequency-duration">3x a day/5days</div>
+                    </td>
                 </tr>
                 
             </tbody>
         </table>
-        <button id="add-prescription"class="add-pbtn"> + add prescription </button>
-        <button id="save-data" class="save-data-btn">
-            SAVE DATA
-        </button>
+        
     </div>
     
     </div>
