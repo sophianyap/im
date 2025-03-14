@@ -81,6 +81,79 @@ document.querySelectorAll('#edit-profile').forEach(button => {
     button.closest('a').href = `/edit-profile/`;
 });
 
+async function fetchAppointmentHistory() {
+    try {
+        // Show loading overlay
+        document.getElementById('loading-overlay').style.display = 'flex';
+        
+        // Get the current patient ID from localStorage
+        const currentPatientId = localStorage.getItem('current_patient_id');
+        
+        if (!currentPatientId) {
+            console.error('No patient ID found in localStorage');
+            return;
+        }
+        
+        // Fetch appointment history from the API
+        const response = await fetch(`/api/appointment-history?patientId=${currentPatientId}`);
+        const data = await response.json();
+        
+        if (!data.success) {
+            console.error('Error fetching appointment history:', data.message);
+            return;
+        }
+        
+        // Display the appointment history
+        displayAppointmentHistory(data.data);
+    } catch (error) {
+        console.error('Error in fetchAppointmentHistory:', error);
+    } finally {
+        // Hide loading overlay
+        document.getElementById('loading-overlay').style.display = 'none';
+    }
+}
+
+// Function to display appointment history in the UI
+function displayAppointmentHistory(appointments) {
+    const appointmentContainer = document.querySelector('.appointment-container');
+    
+    // Clear existing appointments
+    appointmentContainer.innerHTML = '';
+    
+    if (appointments.length === 0) {
+        appointmentContainer.innerHTML = '<p class="no-appointments">No appointment history found.</p>';
+        return;
+    }
+    
+    // Add each appointment to the container
+    appointments.forEach(appointment => {
+        const appointmentCard = document.createElement('div');
+        appointmentCard.className = 'appointment-card';
+        appointmentCard.innerHTML = `
+            <div class="appointment-info">
+                <div class="first-line">
+                    <div class="apt-date">${appointment.date}</div>
+                </div>
+                <div class="patient-details">
+                    <span class="apt-doctor">${appointment.services}</span>
+                </div>
+            </div>
+            <a href="/appt-history/">
+                <div class="apt-arrow">
+                    <p style="color: black;">SEE MORE INFO</p>
+                    <button style="font-weight: bold;">> </button>
+                </div>
+            </a>
+        `;
+
+        appointmentCard.onclick = () => {
+            localStorage.setItem('current_session_id', appointment.sessionId);
+        };
+        
+        appointmentContainer.appendChild(appointmentCard);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const patientId = localStorage.getItem("current_patient_id");
 
@@ -117,4 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error:', error);
         alert(`Error: ${error}`);
     });
+
+    fetchAppointmentHistory();
 });

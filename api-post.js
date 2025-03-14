@@ -631,7 +631,6 @@ async function deletePatientHandler(connection, req, res) {
 }
 
 
-// Handle storing session data from localStorage to database tables
 async function handleSessionDataStorage(connection, req, res) {
     try {
         // Extract session data from request
@@ -663,8 +662,6 @@ async function handleSessionDataStorage(connection, req, res) {
             await updatePatientToothChart(connection, sessionData.patient_id, sessionData.tooth_chart_image);
         }
         
-
-
         return res.status(200).json({ 
             success: true, 
             message: "Session data stored successfully", 
@@ -677,33 +674,70 @@ async function handleSessionDataStorage(connection, req, res) {
     }
 }
 
+
 // Insert session record in tbl_session
+// Modified insertSessionRecord function to handle session_remarks_image
 async function insertSessionRecord(connection, sessionData, dentistId) {
-    const currentDate = new Date().toISOString().split('T')[0];
-    const currentTime = new Date().toTimeString().split(' ')[0];
+    // Get current date and time
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const currentTime = currentDate.toTimeString().split(' ')[0]; // Format: HH:MM:SS
     
-    const sql = `
+    // Extract the base64 data from the data URL for session remarks image
+    let sessionRemarksImageBuffer = null;
+    if (sessionData.session_remarks_image) {
+        // Check if the data is a data URL (starts with "data:")
+        if (sessionData.session_remarks_image.startsWith('data:')) {
+            // Extract the base64 part after the comma
+            const base64Data = sessionData.session_remarks_image.split(',')[1];
+            sessionRemarksImageBuffer = Buffer.from(base64Data, 'base64');
+        } else {
+            // If it's already in base64 format without the data URL prefix
+            sessionRemarksImageBuffer = Buffer.from(sessionData.session_remarks_image, 'base64');
+        }
+    }
+    
+    // Prepare the SQL query
+    const query = `
         INSERT INTO tbl_session 
         (patient_id, dentist_id, session_date, session_remarks, session_remarks_image, session_time_start, session_time_end) 
         VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
     
-    const values = [
-        sessionData.patient_id,
-        dentistId,
-        currentDate,
-        sessionData.session_remarks || null,
-        sessionData.session_remarks_image || null,
-        currentTime,
-        currentTime
-    ];
-    
-    return await executeQuery(connection, sql, values);
+    // Execute the query with parameters
+    return new Promise((resolve, reject) => {
+        connection.query(
+            query,
+            [
+                sessionData.patient_id,
+                dentistId,
+                formattedDate,
+                sessionData.session_remarks || '',
+                sessionRemarksImageBuffer, // This will properly store the canvas image as LONGBLOB
+                currentTime,
+                currentTime // For simplicity, using same time for start and end
+            ],
+            (error, results) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(results);
+                }
+            }
+        );
+    });
 }
+
 
 // Insert service records in tbl_service
 async function insertServiceRecords(connection, services, sessionId) {
-    const serviceInsertPromises = services.map(service => {
+    const serviceInsertPromises = services.map(async service => {
+        // Ensure service_offered_id is provided
+        const serviceOfferedId = service.service_offered_id;
+        if (!serviceOfferedId) {
+            throw new Error('Service offered ID is required');
+        }
+
         const sql = `
             INSERT INTO tbl_service 
             (session_id, service_offered_id, service_tooth_number, service_status, service_fee, service_fee_status, service_amount_tendered) 
@@ -712,9 +746,9 @@ async function insertServiceRecords(connection, services, sessionId) {
         
         const values = [
             sessionId,
-            service.service_offered_id,
-            service.service_tooth_number || null,
-            service.service_status || 'Incomplete',
+            serviceOfferedId,  // Ensure this is not null
+            service.tooth || null,
+            service.remarkId || 'Incomplete',
             service.fee || 0.00,
             service.status || 'UNPAID',
             service.tendered || 0.00
@@ -766,51 +800,55 @@ async function insertPrescriptionRecords(connection, prescriptions, sessionId) {
 
 // Update patient tooth chart
 async function updatePatientToothChart(connection, patientId, toothChartImage) {
-    const currentDate = new Date().toISOString().split('T')[0];
+    // Extract the base64 data from the data URL for tooth chart image
+    let toothChartImageBuffer = null;
     
-    // Extract the base64 data and convert to binary
-    // (Assuming toothChartImage is in format "data:image/png;base64,...")
-    let imageData = toothChartImage;
-    
-    // Option 1: If you still want to store in DB but optimize the storage
+    // Check if the data is a data URL (starts with "data:")
     if (toothChartImage.startsWith('data:')) {
+        // Extract the base64 part after the comma
         const base64Data = toothChartImage.split(',')[1];
-        imageData = Buffer.from(base64Data, 'base64');
+        toothChartImageBuffer = Buffer.from(base64Data, 'base64');
+    } else {
+        // If it's already in base64 format without the data URL prefix
+        toothChartImageBuffer = Buffer.from(toothChartImage, 'base64');
     }
     
-    // Option 2: Save to filesystem and store path (better approach)
-    /* 
-    const imagePath = await saveImageToFileSystem(toothChartImage, patientId);
-    */
+    const currentDate = new Date();
+    const formattedDate = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
     
-    // Check if tooth chart already exists for this patient
-    const checkSql = "SELECT patient_id FROM tbl_patient_tooth_chart WHERE patient_id = ?";
-    const checkResult = await executeQuery(connection, checkSql, [patientId]);
+    // Check if a record already exists for this patient
+    const checkQuery = "SELECT patient_id FROM tbl_patient_tooth_chart WHERE patient_id = ?";
     
-    try {
-        if (checkResult.length > 0) {
-            // Update existing tooth chart
-            const updateSql = `
-                UPDATE tbl_patient_tooth_chart 
-                SET tooth_chart = ?, date_added = ? 
-                WHERE patient_id = ?
-            `;
+    return new Promise((resolve, reject) => {
+        connection.query(checkQuery, [patientId], (error, results) => {
+            if (error) {
+                reject(error);
+                return;
+            }
             
-            return await executeQuery(connection, updateSql, [imageData, currentDate, patientId]);
-        } else {
-            // Insert new tooth chart
-            const insertSql = `
-                INSERT INTO tbl_patient_tooth_chart 
-                (patient_id, tooth_chart, date_added) 
-                VALUES (?, ?, ?)
-            `;
-            
-            return await executeQuery(connection, insertSql, [patientId, imageData, currentDate]);
-        }
-    } catch (error) {
-        console.error("Error saving tooth chart:", error);
-        throw error; // Re-throw to be caught by the transaction handler
-    }
+            if (results.length > 0) {
+                // Update existing record
+                const updateQuery = "UPDATE tbl_patient_tooth_chart SET tooth_chart = ?, date_added = ? WHERE patient_id = ?";
+                connection.query(updateQuery, [toothChartImageBuffer, formattedDate, patientId], (error, results) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            } else {
+                // Insert new record
+                const insertQuery = "INSERT INTO tbl_patient_tooth_chart (patient_id, tooth_chart, date_added) VALUES (?, ?, ?)";
+                connection.query(insertQuery, [patientId, toothChartImageBuffer, formattedDate], (error, results) => {
+                    if (error) {
+                        reject(error);
+                    } else {
+                        resolve(results);
+                    }
+                });
+            }
+        });
+    });
 }
 
 // Helper function to save image to filesystem

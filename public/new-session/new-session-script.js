@@ -163,9 +163,9 @@ document.getElementById('check-out-btn').addEventListener("click", () => {
         const remarkDropdown = element.querySelector('#remarks').value;
 
         serviceValues.push({
-            service_tooth_number: toothInput,
-            service_offered_id: serviceDropdown,
-            service_status: remarkDropdown
+            serviceId: serviceDropdown,
+            tooth: toothInput,
+            remarkId: remarkDropdown
         });
     });
 
@@ -181,28 +181,7 @@ document.getElementById('check-out-btn').addEventListener("click", () => {
         tooth_chart_image: toothChartImageData
     }
 
-    console.log(JSON.stringify(currentServiceInfo));
-
     localStorage.setItem('current_service_info', JSON.stringify(currentServiceInfo));
-
-    // Example logic to handle submission, such as sending data to an API
-    // fetch('/submit-services', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({ services: serviceValues })
-    // }).then(response => response.json())
-    //   .then(data => console.log('Success:', data))
-    //   .catch(error => console.error('Error:', error));
-
-    // Optional: Visual feedback for successful save
-    //alert('Services saved successfully!');
-
-    /*
-    const image = canvas.toDataURL("image/png"); // Convert canvas to PNG
-    const link = document.createElement("a");
-    link.href = image;
-    link.download = "drawing.png";
-    link.click();*/
 });
 
 function loadCurrentServiceInfo() {

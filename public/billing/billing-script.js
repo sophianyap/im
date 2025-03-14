@@ -77,7 +77,7 @@ function loadBillingData() {
             // Create a row for each service
             serviceValues.forEach(service => {
                 const serviceName = getServiceName(services, service.serviceId);
-                const newRow = createBillingRow(serviceName);
+                const newRow = createBillingRow(serviceName, service.serviceId);
                 billingTableBody.appendChild(newRow);
             });
         }).catch(error => {
@@ -100,7 +100,7 @@ function getServiceName(services, serviceId) {
 /**
  * Creates a new billing table row
  */
-function createBillingRow(serviceName) {
+function createBillingRow(serviceName, serviceId) {
     const tr = document.createElement('tr');
     tr.className = 'table-row';
     
@@ -140,6 +140,8 @@ function createBillingRow(serviceName) {
     
     feeInput.addEventListener('input', updateBalance);
     tenderedInput.addEventListener('input', updateBalance);
+
+    tr.dataset.serviceId = serviceId;  // Ensure serviceId is stored in the row
     
     return tr;
 }
@@ -194,8 +196,9 @@ function saveData() {
     
     billingRows.forEach(row => {
         const serviceCells = row.querySelectorAll('.table-data');
-        if (serviceCells.length > 0) {  // Make sure the row has cells
+        if (serviceCells.length > 0) {
             const serviceName = serviceCells[0].textContent;
+            const serviceId = row.dataset.serviceId;  // Get serviceId from data attribute
             const inputs = row.querySelectorAll('input');
             const fee = inputs[0].value;
             const tendered = inputs[1].value;
@@ -204,6 +207,7 @@ function saveData() {
             
             billings.push({
                 serviceName,
+                service_offered_id: serviceId,  // Include service_offered_id
                 fee,
                 tendered,
                 balance,
@@ -212,20 +216,26 @@ function saveData() {
         }
     });
 
-    console.log(billings);
-    console.log(prescriptions);
-    
     // Get current service info and update it
     const storedData = localStorage.getItem('current_service_info');
     
     if (storedData) {
         try {
             const parsedData = JSON.parse(storedData);
-            
-            // Add billing and prescription data
-            parsedData.billings = billings;
+
+            // Merge service_values and billings into a single array
+            const mergedServiceValues = parsedData.service_values.map(service => {
+                const billing = billings.find(b => b.service_offered_id === service.serviceId);
+                return {
+                    ...service,
+                    ...billing
+                };
+            });
+
+            // Update the parsedData with the merged service values
+            parsedData.service_values = mergedServiceValues;
             parsedData.prescriptions = prescriptions;
-            
+
             // Save back to localStorage
             localStorage.setItem('current_service_info', JSON.stringify(parsedData));
             
@@ -241,6 +251,7 @@ function saveData() {
         alert('No service information found. Please create a service record first.');
     }
 
+    // Send the updated data to the backend
     fetch('/api/store-session-data', {
         method: 'POST',
         headers: {
@@ -255,7 +266,7 @@ function saveData() {
         } else {
             alert('Error: ' + data.error);
         }
-
+    
         localStorage.clear();
         window.location.href = '/';
     })

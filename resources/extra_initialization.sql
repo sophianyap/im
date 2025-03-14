@@ -43,4 +43,4 @@ INSERT INTO tbl_person (person_id, person_last_name, person_first_name, person_m
 INSERT INTO tbl_dentist (dentist_id, person_id, dentist_specialization, license_number) VALUES (0, 0, 'Orthodontics', 'DN-1234567');
 
 -- Set upload size max to 16MB
-SET GLOBAL max_allowed_packet=16777216;
+SET GLOBAL max_allowed_packet=16777216; 

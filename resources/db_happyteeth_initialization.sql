@@ -159,7 +159,7 @@ CREATE TABLE `tbl_patient` (
 
 CREATE TABLE `tbl_patient_tooth_chart` (
   `patient_id` int(11) NOT NULL,
-  `tooth_chart` blob DEFAULT NULL,
+  `tooth_chart` LONGBLOB DEFAULT NULL,
   `patienttooth_remarks` text DEFAULT NULL,
   `date_added` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -237,7 +237,7 @@ CREATE TABLE `tbl_session` (
   `dentist_id` int(11) DEFAULT NULL,
   `session_date` date DEFAULT NULL,
   `session_remarks` text DEFAULT NULL,
-  `session_remarks_image` blob DEFAULT NULL,
+  `session_remarks_image` LONGBLOB DEFAULT NULL,
   `session_time_start` time DEFAULT NULL,
   `session_time_end` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

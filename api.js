@@ -25,6 +25,11 @@ api.get(`/get-services-offered`, async (req, res) => {
     return await apiGetHandlers.getServicesOfferedHandler(connection, req, res);
 });
 
+api.get('/appointment-history', (req, res) => apiGetHandlers.getAppointmentHistoryHandler(connection, req, res));
+api.get('/session', (req, res) => apiGetHandlers.getSessionHandler(connection, req, res));
+api.get('/patient-session', (req, res) => apiGetHandlers.getPatientSessionHandler(connection, req, res));
+api.get('/getBillingInfo', (req, res) => apiGetHandlers.getBillingInfoHandler(connection, req, res));
+
 // POST handlers
 api.post(`/add-patient`, async (req, res) => {
     return await apiPostHandlers.addPatientHandler(connection, req, res);
