@@ -41,7 +41,7 @@ a {
 }
 .dashboard-container{
     width:100%;
-    border: 10px solid rgb(241, 203, 78);
+    border: 10px solid #dbb13b;
     border-radius: 10px;
     height: auto;
     display: flex;
@@ -168,7 +168,7 @@ img {
     border-radius: 10px;
     width: 80px;
     height: 40px;
-    background-color: #a1a1e9;
+    background-color: #56bda2;
     padding: 60px 30px;
     margin-left: 10px;
     text-align: center;
@@ -182,7 +182,7 @@ img {
 }
 
 #total-no{
-    color: rgb(26, 8, 109); 
+    color: #2d325a; 
     font-size: 25px;
 }
 
@@ -193,7 +193,7 @@ img {
     background: none;
     padding: 0px;
     border-radius: 10px;
-    background-color: #51CCB7;
+    background-color: #56bda2;
     height: 50px;
     width: 50px;
     margin-top: 20px;
@@ -216,7 +216,7 @@ img {
     display: flex;
     flex-direction: column;
     padding: 40px 20px;
-    border: 10px solid rgb(241, 203, 78);
+    border: 10px solid #dbb13b;
 
     justify-content: center;
     align-items: center;
@@ -384,7 +384,7 @@ img {
 }
 
 .editbtn {
-    background-color: #81CFEC;
+    background-color: #56bda2;
 }
 
 #edit-profile {
@@ -451,16 +451,13 @@ img {
     align-items: center;
     width: 90%;
     height: 100%;
-    background-color: #304b78;
+    background-color: #2d325a;
     margin: 40px auto;
     border-radius: 10px;
     flex-direction: column;
     padding-top: 20px;
     padding-bottom: 20px;
 }
-
-
-
 
 .photo {
     position: absolute;
@@ -532,7 +529,7 @@ img {
     text-align: left;
     border: none;
     font-family: 'Poppins', sans-serif;
-    background-color: #51CCB7;
+    background-color: #56bda2;
     z-index: 1;
     
 }
@@ -544,7 +541,6 @@ img {
 
 #ah {
     margin-bottom: 15px;
-
 }
 
 #mh:hover{
@@ -555,7 +551,7 @@ img {
 }
 
 .patient-information {
-    background-color: #51CCB7;
+    background-color: #56bda2;
     padding: 10px 20px;
     font-size: 15px;
     color: white;
@@ -572,7 +568,7 @@ img {
 .second-part,
 .fourth-part {
     position: relative;
-    border: 10px solid #51CCB7;
+    border: 10px solid #56bda2;
     border-radius: 10px;
     background-color: white;
     padding: 20px;
@@ -618,7 +614,6 @@ img {
 
 .container2{
     width: 100%;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -785,7 +780,7 @@ img {
 }
 
 .apt-arrow button:hover {
-    color: rgb(42, 228, 150);
+    color: #56bda2;
 }
 .lower-container{
     width: 100%;
@@ -800,13 +795,14 @@ img {
     background: none;
     padding: 0px;
     border-radius: 10px;
-    background-color: #51CCB7;
+    background-color: #56bda2;
     height: 40px;
     width: 40px;
     font-size: 30px;
     color: #296158;
 }
 #add-button-appt:hover{background-color: #62e9d0;}  
+
 /*new session*/
 .new-ds,
 .date-today-ds{
@@ -823,7 +819,7 @@ img {
     align-items: center;
     width: 90%;
     height: 100%;
-    background-color:   #304b78;
+    background-color:   #2d325a;
     margin: 40px auto;
     border-radius: 10px;
     flex-direction: column;
@@ -875,7 +871,7 @@ img {
 }
 
 .second-part-nds{
-    border: 10px solid #51CCB7;
+    border: 10px solid #56bda2;
     border-radius: 10px;
     background-color: white;
     padding: 20px;
@@ -926,7 +922,7 @@ img {
 }
 
 #add-servicebtn{
-    background-color: #51CCB7;
+    background-color: #56bda2;
     color: #296158;
 }
 
@@ -1030,7 +1026,6 @@ img {
     width:100%;
     padding: 10px;
     height:100%;
-    
     border-radius: 10px;
     background-color: rgb(216, 213, 213);
 }
@@ -1098,7 +1093,6 @@ img {
 }
 #save-btn{
     width: 52%;
-
     background-color: #88ea6a;
     color: #345a29;
 }
@@ -1140,98 +1134,6 @@ img {
     height: 10px;
 }
 
-/*check-out*/
-
-.check-out-top{
-    margin-left: 50px;
-    margin-top: 50px;
-    margin-right: 50px;
-    height: 100px;
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-
-.top-part2 {
-    margin-left: 50px;
-    margin-top: 30px;
-    margin-right: 50px;
-    height: 100px;
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.left-side-top2 {
-    display: flex;
-    align-items: center;
-    padding-right: 10px;
-    
-}
-
-.check-out-title{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    color: rgb(13, 8, 65);
-    
-}
-
-.left-side-in, .right-side-in{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.left-side-in{
-    margin-left: 15%;
-}
-.right-side-in{
-
-    gap: 40px;
-    width: 50%;
-}
-
-
-
-
-
-#delete-service{
-    padding: 15px;
-    display: flex;
-    flex: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 12px;
-    margin-right: 10px;
-    background-color: transparent;
-    border-radius: 30px;
-    border: none;
-    color: #000000;
-    width:30px;
-    height: 30px;
-    font-size: 20px;
-}
-
-#delete-service:hover{
-    background-color: #acacac;
-    transition: 0.5s;
-    cursor: pointer;
-    color: white;
-}
-
-
-#divider{
-    margin-top: 5px;
-    color: #8f8c8c;
-    font-weight: bold;
-}
-
-
 /*new-patient*/
 .patient-info,.patient-info-ad,.patient-info1{
     border-top: none;
@@ -1242,8 +1144,6 @@ img {
     padding: 10px;
     font-size:14PX;
     font-family: 'Poppins', sans-serif;
-
-    
    
 }
 .patient-info1{
