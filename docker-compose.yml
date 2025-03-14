@@ -10,6 +10,7 @@ services:
       MARIADB_DATABASE: db_happyteeth
       MARIADB_USER: dbuser
       MARIADB_PASSWORD: dbpassword
+    command: --max_allowed_packet=32505856
     ports:
       - "3306:3306"
     volumes:
