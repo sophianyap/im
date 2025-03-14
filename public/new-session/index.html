@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <title>Patient Information</title>
-    <link rel="icon" type="image/png" href="assets\dentistry.png">
+    <link rel="icon" type="image/png" href="/assets/dentistry.png">
 
 </head>
 
@@ -24,7 +24,7 @@
    
     <div class="top-part2">
         <div class="left-side-top">
-            <a href="/patient-info/index.html">
+            <a href="/patient-info/">
                 <button id="home-button">
                     <img id="go-home" src="/assets/back button.png" alt="back">
                 </button>
@@ -57,21 +57,7 @@
                 <h3 id="service-title">STATUS</h3>
             </div>
             <div class="service-card">
-                <div class="service-line">
-                    <button id="delete-service">
-                        x
-                    </button>
-                    <input class="tooth-input" placeholder="Tooth"> 
-                    <select name="service" id="service" aria-placeholder="SERVICE">
-                        <option value="" disabled selected>SERVICE</option>
-                        
-
-                    </select>
-                    <span class="divider2">|</span>
-                    <select name="remark" id="remarks">
-                        <option value="complete">Complete</option>
-                        <option value="incomplete">Incomplete</option>
-                    </select>
+                <div id="service-line-container">
                 </div>
                 <div class="tooth-chart">
 
@@ -82,16 +68,14 @@
                     <div>
                         <img src="" alt="tooth-chart" id="tooth-chart-img">
                     </div>
-
                 </div>
-                
                 <div class="service-title-container">
                     <h3 id="service-title">FINAL REMARKS</h3>
-                    <button class="clear-btn">
+                    <button class="clear-btn" id="clear-btn">
                         CLEAR
                     </button>
                 </div>
-                <canvas id="final-remarks"></canvas>
+                <canvas id="final-remarks" draggable="false"></canvas>
 
 
                 <div class="final-remarks-text">
@@ -109,59 +93,11 @@
                         </button>
                     </a>
                 </div>
-
-
-                <script>
-                    const canvas = document.getElementById("final-remarks");
-                    const ctx = canvas.getContext("2d");
-                    const saveBtn = document.getElementById("saveBtn");
-
-                    let isDrawing = false;
-
-                    canvas.addEventListener("mousedown", (e) => {
-                        isDrawing = true;
-                        ctx.beginPath();
-                        ctx.moveTo(e.offsetX, e.offsetY);
-                    });
-
-                    canvas.addEventListener("mousemove", (e) => {
-                        if (isDrawing) {
-                            ctx.lineTo(e.offsetX, e.offsetY);
-                            ctx.stroke();
-                        }
-                    });
-
-                    canvas.addEventListener("mouseup", () => {
-                        isDrawing = false;
-                    });
-
-                    canvas.addEventListener("mouseleave", () => {
-                        isDrawing = false;
-                    });
-
-                    saveBtn.addEventListener("click", () => {
-                        const image = canvas.toDataURL("image/png"); // Convert canvas to PNG
-                        const link = document.createElement("a");
-                        link.href = image;
-                        link.download = "drawing.png";
-                        link.click();
-                    });
-                </script>
-
-
-
-
             </div>
-
         </div>
-
     </div>
-
     </div>
-
     </div>
-
-
+    <script src="new-session-script.js"></script>
 </body>
-
 </html>

@@ -18,6 +18,32 @@ function getPatientsHandler(connection, req, res) {
 }
 
 /**
+ * Handles services offered requests
+ * @param {Object} connection - Database connection
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
+function getServicesOfferedHandler(connection, req, res) {
+    try {
+        return getServicesOffered(connection, res)
+    } catch (error) {
+        console.error('Unexpected error in getPatientsHandler:', error);
+        return res.status(500).json({ success: false, message: 'Server error' });
+    }
+}
+
+async function getServicesOffered(connection, res) {
+    try {
+        const query = `SELECT service_offered_id, service_offered_name FROM tbl_services_offered;`
+        const servicesOffered = await executeQuery(connection, query);
+        return res.json(servicesOffered);
+    } catch (error) {
+        console.error('Error getting services offered:', error);
+        return res.status(500).json({ success: false, message: 'Database error' });
+    }
+}
+
+/**
  * Retrieves detailed information for a specific patient
  * @param {Object} connection - Database connection
  * @param {string|number} patientId - Patient ID to retrieve
@@ -34,20 +60,16 @@ async function getPatientDetails(connection, patientId, res) {
                 per.person_middle_name,
                 per.person_birthdate,
                 TIMESTAMPDIFF(YEAR, per.person_birthdate, CURDATE()) AS age,
-                g.gender_title AS gender,
+                per.gender_id,
+                per.status_id,
                 per.contact_number,
                 p.date_added,
-                s.status_title AS civil_status,
                 o.occupation_title AS occupation,
                 per.person_company AS company
             FROM 
                 tbl_patient p
             JOIN 
                 tbl_person per ON p.person_id = per.person_id
-            LEFT JOIN 
-                tbl_gender g ON per.gender_id = g.gender_id
-            LEFT JOIN 
-                tbl_status s ON per.status_id = s.status_id
             LEFT JOIN 
                 tbl_occupation o ON per.occupation_id = o.occupation_id
             WHERE p.patient_id = ?`;
@@ -71,39 +93,42 @@ async function getPatientDetails(connection, patientId, res) {
                         c.city_name
                     FROM 
                         tbl_address a
-                    JOIN 
-                        tbl_person per ON a.person_id = per.person_id
                     LEFT JOIN 
                         tbl_barangay b ON a.barangay_id = b.barangay_id
                     LEFT JOIN 
                         tbl_city c ON b.city_id = c.city_id
                     WHERE 
-                        per.person_id = (SELECT person_id FROM tbl_patient WHERE patient_id = ?)
+                        a.address_id = (SELECT address_id FROM tbl_person WHERE person_id = 
+                            (SELECT person_id FROM tbl_patient WHERE patient_id = ?))
                     LIMIT 1`,
                 params: [patientId]
             },
             medicalConditions: {
                 query: `
                     SELECT 
-                        remarks
+                        mc.condition_name AS condition_name
                     FROM 
-                        tbl_medical_condition
+                        tbl_medical_condition_patient mcp
+                    JOIN
+                        tbl_medical_condition mc ON mcp.condition_id = mc.condition_id
                     WHERE 
-                        patient_id = ?
+                        mcp.patient_id = ?
                     ORDER BY 
-                        condition_id DESC`,
+                        mc.condition_id DESC`,
                 params: [patientId]
             },
             medicalHistory: {
                 query: `
                     SELECT 
-                        remarks
+                        mh.history_name AS history_name
                     FROM 
-                        tbl_medical_history
+                        tbl_medical_history_patient mhp
+                    JOIN
+                        tbl_medical_history mh ON mhp.history_id = mh.history_id
                     WHERE 
-                        patient_id = ?
+                        mhp.patient_id = ?
                     ORDER BY 
-                        history_id DESC`,
+                        mh.history_id DESC`,
                 params: [patientId]
             },
             medications: {
@@ -153,13 +178,12 @@ async function getPatientDetails(connection, patientId, res) {
         }
 
         // Process medical conditions and history
-        const medicalConditions = results[1].map(item => item.remarks).filter(Boolean);
-        const medicalHistory = results[2].map(item => item.remarks).filter(Boolean);
+        const medicalConditions = results[1].map(item => item.condition_name).filter(Boolean);
+        const medicalHistory = results[2].map(item => item.history_name).filter(Boolean);
 
         // Extract medications
         const medications = results[3].map(item => item.medication_name);
 
-        console.log(patient.person_birthdate);
         // Format the response
         const formattedResponse = {
             id: patient.patient_id,
@@ -172,8 +196,8 @@ async function getPatientDetails(connection, patientId, res) {
             address: Object.keys(address).length > 0 ? address : 'Not provided',
             birthdate: patient.person_birthdate,
             occupation: patient.occupation || 'Not provided',
-            gender: patient.gender || 'Not provided',
-            civilStatus: patient.civil_status || 'Not provided',
+            gender: patient.gender_id,
+            civilStatus: patient.status_id,
             company: patient.company,
             medicalConditions: medicalConditions.length > 0 ? [...new Set(medicalConditions)] : [],
             medicalHistory: medicalHistory.length > 0 ? [...new Set(medicalHistory)] : [],
@@ -182,7 +206,6 @@ async function getPatientDetails(connection, patientId, res) {
                 formatDate(results[4][0].last_updated) :
                 formatDate(patient.date_added)
         };
-
         return res.json(formattedResponse);
     } catch (error) {
         console.error('Error retrieving patient details:', error);
@@ -259,5 +282,6 @@ function formatDate(dateString) {
 }
 
 module.exports = {
-    getPatientsHandler
+    getPatientsHandler,
+    getServicesOfferedHandler
 }

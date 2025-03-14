@@ -127,6 +127,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
       fillPatients();
     })
+    .then(() => {
+      setTimeout(() => {
+        document.getElementById("loading-overlay").style.display = "none";
+      }, 1000);
+    })
     .catch(error => {
       console.error('Error:', error);
       alert(`Error: ${error}`);

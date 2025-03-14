@@ -74,18 +74,18 @@
                         SEX
                     </label>
                     <select name="gender" id="gender-title" class="patient-info">
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="0">Male</option>
+                        <option value="1">Female</option>
                     </select>
                     <label for="status-title" class="info-title">
                         CIVIL STATUS:
                     </label>
                     <select name="civil-status" id="status-title" class="patient-info">
-                        <option value="Single">Single</option>
-                        <option value="Married">Married</option>
-                        <option value="Widowed">Widowed</option>
-                        <option value="Separated">Separated</option>
-                        <option value="Annulled">Annulled</option>
+                        <option value="0">Single</option>
+                        <option value="1">Married</option>
+                        <option value="2">Widowed</option>
+                        <option value="3">Separated</option>
+                        <option value="4">Annulled</option>
                     </select>
                 </div> 
             </div>
@@ -96,7 +96,7 @@
                     </div>
                     <div class="address-input">
                         <input type="text" id="patient-city" placeholder="City" class="patient-info-ad">
-                        <input type="text" id="patient-barangy" placeholder="Barangay" class="patient-info-ad">
+                        <input type="text" id="patient-barangay" placeholder="Barangay" class="patient-info-ad">
                         <input type="text" id="patient-street" placeholder="Street" class="patient-info-ad">
                     </div>
                 </div>
@@ -138,7 +138,7 @@
         </div>
         <div class="form-actions">
             <button type="button" id="cancel-edit" class="cancel-btn">Cancel</button>
-            <button type="submit" class="save-profile-btn">Save Changes</button>
+            <button type="submit" id="save-button" class="save-profile-btn">Save Changes</button>
         </div>
         
     </div>

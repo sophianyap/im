@@ -19,21 +19,19 @@ async function updatePatientHandler(connection, req, res) {
         // Check if patient exists
         const patientExists = await checkPatientExists(connection, patientData.id);
         if (!patientExists) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'Patient not found in database' 
+            return res.status(404).json({
+                success: false,
+                message: 'Patient not found in database'
             });
         }
 
         // Basic validation for required fields
         const requiredFields = [
             'firstName',
-            'middleName',
             'lastName',
             'birthdate',
             'gender',
             'civilStatus',
-            'occupation',
             'mobile'
         ];
 
@@ -47,7 +45,7 @@ async function updatePatientHandler(connection, req, res) {
         }
 
         // Validate address data
-        if (!patientData.address || !patientData.address.city_name || 
+        if (!patientData.address || !patientData.address.city_name ||
             !patientData.address.barangay_name || !patientData.address.street_name) {
             return res.status(400).json({
                 success: false,
@@ -58,16 +56,16 @@ async function updatePatientHandler(connection, req, res) {
         // Validate birthdate
         const birthDate = new Date(patientData.birthdate);
         if (isNaN(birthDate.getTime())) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Invalid birth date format' 
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid birth date format'
             });
         }
 
         if (birthDate > new Date()) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Birth date cannot be in the future' 
+            return res.status(400).json({
+                success: false,
+                message: 'Birth date cannot be in the future'
             });
         }
 
@@ -83,36 +81,70 @@ async function updatePatientHandler(connection, req, res) {
         // Begin transaction
         return await executeTransaction(connection, async () => {
             // Get the person_id associated with this patient
-            const personId = await getPersonId(connection, patientData.id);
-
-            // 1. Process gender
-            const genderId = await getOrCreateRecord(
-                connection, 
-                'tbl_gender', 
-                'gender_id', 
-                'gender_title', 
-                patientData.gender
+            const personResult = await executeQuery(
+                connection,
+                'SELECT person_id FROM tbl_patient WHERE patient_id = ?',
+                [patientData.id]
             );
+            
+            if (personResult.length === 0) {
+                throw new Error(`Person ID not found for patient ${patientData.id}`);
+            }
+            
+            const personId = personResult[0].person_id;
 
-            // 2. Process civil status
-            const statusId = await getOrCreateRecord(
-                connection, 
-                'tbl_status', 
-                'status_id', 
-                'status_title', 
-                patientData.civilStatus
-            );
+            // 1. Process gender - we're using the ID directly as per the schema
+            const genderId = patientData.gender;
+
+            // 2. Process civil status - we're using the ID directly as per the schema
+            const statusId = patientData.civilStatus;
 
             // 3. Process occupation
             const occupationId = await getOrCreateRecord(
-                connection, 
-                'tbl_occupation', 
-                'occupation_id', 
-                'occupation_title', 
-                patientData.occupation
+                connection,
+                'tbl_occupation',
+                'occupation_id',
+                'occupation_title',
+                patientData.occupation || 'Not specified'
             );
 
-            // 4. Update person information
+            // 4. Process city - check if exists first
+            const cityId = await getOrCreateCity(connection, patientData.address.city_name);
+
+            // 5. Process barangay - check if exists first
+            const barangayId = await getOrCreateBarangay(connection, patientData.address.barangay_name, cityId);
+
+            // 6. Process address
+            // Get current address_id for the person if it exists
+            const personAddressResult = await executeQuery(
+                connection,
+                'SELECT address_id FROM tbl_person WHERE person_id = ?',
+                [personId]
+            );
+            
+            const currentAddressId = personAddressResult[0]?.address_id;
+            
+            let addressId;
+            
+            if (currentAddressId) {
+                // Update existing address
+                await executeQuery(
+                    connection,
+                    'UPDATE tbl_address SET address_street_name = ?, barangay_id = ? WHERE address_id = ?',
+                    [patientData.address.street_name, barangayId, currentAddressId]
+                );
+                addressId = currentAddressId;
+            } else {
+                // Create new address
+                const addressResult = await executeQuery(
+                    connection,
+                    'INSERT INTO tbl_address (address_street_name, barangay_id) VALUES (?, ?)',
+                    [patientData.address.street_name, barangayId]
+                );
+                addressId = addressResult.insertId;
+            }
+
+            // 7. Update person information
             await executeQuery(
                 connection,
                 `UPDATE tbl_person SET 
@@ -123,84 +155,73 @@ async function updatePatientHandler(connection, req, res) {
                     gender_id = ?, 
                     status_id = ?, 
                     occupation_id = ?, 
+                    address_id = ?,
                     person_company = ?, 
                     contact_number = ?
                 WHERE person_id = ?`,
                 [
                     patientData.lastName,
                     patientData.firstName,
-                    patientData.middleName,
+                    patientData.middleName || null,
                     patientData.birthdate,
                     genderId,
                     statusId,
                     occupationId,
+                    addressId,
                     patientData.company || null,
                     patientData.mobile,
                     personId
                 ]
             );
 
-            // 5. Process city - check if exists first
-            const cityId = await getOrCreateCity(connection, patientData.address.city_name);
-
-            // 6. Process barangay - check if exists first
-            const barangayId = await getOrCreateBarangay(connection, patientData.address.barangay_name, cityId);
-
-            // 7. Update address information
-            const addressResult = await executeQuery(
-                connection,
-                'SELECT address_id FROM tbl_address WHERE person_id = ?',
-                [personId]
-            );
-
-            if (addressResult.length > 0) {
-                // Update existing address
-                await executeQuery(
-                    connection,
-                    'UPDATE tbl_address SET address_street_name = ?, barangay_id = ? WHERE person_id = ?',
-                    [patientData.address.street_name, barangayId, personId]
-                );
-            } else {
-                // Insert new address if none exists
-                await executeQuery(
-                    connection,
-                    'INSERT INTO tbl_address (address_street_name, person_id, barangay_id) VALUES (?, ?, ?)',
-                    [patientData.address.street_name, personId, barangayId]
-                );
-            }
-
             // 8. Handle medical conditions - first remove existing ones
             await executeQuery(
                 connection,
-                'DELETE FROM tbl_medical_condition WHERE patient_id = ?',
+                'DELETE FROM tbl_medical_condition_patient WHERE patient_id = ?',
                 [patientData.id]
             );
 
-            // Add new medical conditions
+            // 9. Add any medical conditions if provided
             if (patientData.medicalConditions && patientData.medicalConditions.length > 0) {
                 for (const condition of patientData.medicalConditions) {
+                    const conditionId = await getOrCreateRecord(
+                        connection,
+                        'tbl_medical_condition',
+                        'condition_id',
+                        'condition_name',
+                        condition
+                    );
+
                     await executeQuery(
                         connection,
-                        'INSERT INTO tbl_medical_condition (patient_id, remarks) VALUES (?, ?)',
-                        [patientData.id, condition]
+                        'INSERT INTO tbl_medical_condition_patient (patient_id, condition_id) VALUES (?, ?)',
+                        [patientData.id, conditionId]
                     );
                 }
             }
 
-            // 9. Handle medical history/medications - first remove existing ones
+            // 10. Handle medical history - first remove existing ones
             await executeQuery(
                 connection,
-                'DELETE FROM tbl_medical_history WHERE patient_id = ?',
+                'DELETE FROM tbl_medical_history_patient WHERE patient_id = ?',
                 [patientData.id]
             );
 
-            // Add new medications
+            // 11. Add medical history if provided
             if (patientData.medicalHistory && patientData.medicalHistory.length > 0) {
-                for (const medication of patientData.medicalHistory) {
+                for (const history of patientData.medicalHistory) {
+                    const historyId = await getOrCreateRecord(
+                        connection,
+                        'tbl_medical_history',
+                        'history_id',
+                        'history_name',
+                        history
+                    );
+
                     await executeQuery(
                         connection,
-                        'INSERT INTO tbl_medical_history (patient_id, remarks) VALUES (?, ?)',
-                        [patientData.id, medication]
+                        'INSERT INTO tbl_medical_history_patient (patient_id, history_id) VALUES (?, ?)',
+                        [patientData.id, historyId]
                     );
                 }
             }
@@ -231,16 +252,14 @@ async function addPatientHandler(connection, req, res) {
     try {
         const patientData = req.body;
 
-        console.log(req.body);
-
         // Validate required person fields
         const requiredFields = [
             'firstName',
             'lastName',
-            'birthDate',
+            'birthdate',  // Changed from birthDate to match existing code
             'gender',
             'civilStatus',
-            'mobileNumber'
+            'mobile'      // Changed from mobileNumber to match existing code
         ];
 
         const missingFields = requiredFields.filter(field => !patientData[field]);
@@ -260,7 +279,7 @@ async function addPatientHandler(connection, req, res) {
             });
         }
 
-        const requiredAddressFields = ['street', 'barangay', 'city'];
+        const requiredAddressFields = ['street_name', 'barangay_name', 'city_name'];
         const missingAddressFields = requiredAddressFields.filter(field => !patientData.address[field]);
 
         if (missingAddressFields.length > 0) {
@@ -271,7 +290,7 @@ async function addPatientHandler(connection, req, res) {
         }
 
         // Validate birthdate
-        const birthDate = new Date(patientData.birthDate);
+        const birthDate = new Date(patientData.birthdate);
         if (isNaN(birthDate.getTime())) {
             return res.status(400).json({ success: false, message: 'Invalid birth date format' });
         }
@@ -282,51 +301,46 @@ async function addPatientHandler(connection, req, res) {
 
         // Validate Philippine mobile number (format: 09xxxxxxxxx)
         const mobileNumberRegex = /^09\d{9}$/;
-        if (!mobileNumberRegex.test(patientData.mobileNumber)) {
+        if (!mobileNumberRegex.test(patientData.mobile)) {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid mobile number format. Must be 11 digits starting with 09 (e.g., 09171234567)'
             });
         }
 
-        // Validate medical history if provided
-        if (patientData.currentMedications && !Array.isArray(patientData.currentMedications)) {
-            return res.status(400).json({
-                success: false,
-                message: 'Current medications must be an array'
-            });
-        }
-
         // Begin transaction
         return await executeTransaction(connection, async () => {
-            // 1. Process gender
-            const genderId = await getOrCreateRecord(
-                connection, 
-                'tbl_gender', 
-                'gender_id', 
-                'gender_title', 
-                patientData.gender
-            );
+            // 1. Process gender - using the ID directly
+            const genderId = patientData.gender;
 
-            // 2. Process civil status
-            const statusId = await getOrCreateRecord(
-                connection, 
-                'tbl_status', 
-                'status_id', 
-                'status_title', 
-                patientData.civilStatus
-            );
+            // 2. Process civil status - using the ID directly
+            const statusId = patientData.civilStatus;
 
             // 3. Process occupation
             const occupationId = await getOrCreateRecord(
-                connection, 
-                'tbl_occupation', 
-                'occupation_id', 
-                'occupation_title', 
-                patientData.occupation
+                connection,
+                'tbl_occupation',
+                'occupation_id',
+                'occupation_title',
+                patientData.occupation || 'Not specified'
             );
 
-            // 4. Insert into tbl_person
+            // 4. Process city - check if exists first
+            const cityId = await getOrCreateCity(connection, patientData.address.city_name);
+
+            // 5. Process barangay - check if exists first
+            const barangayId = await getOrCreateBarangay(connection, patientData.address.barangay_name, cityId);
+
+            // 6. Create address
+            const addressResult = await executeQuery(
+                connection,
+                'INSERT INTO tbl_address (address_street_name, barangay_id) VALUES (?, ?)',
+                [patientData.address.street_name, barangayId]
+            );
+            
+            const addressId = addressResult.insertId;
+
+            // 7. Insert into tbl_person
             const personInsertResult = await executeQuery(
                 connection,
                 `INSERT INTO tbl_person (
@@ -337,66 +351,70 @@ async function addPatientHandler(connection, req, res) {
                     gender_id, 
                     status_id, 
                     occupation_id, 
+                    address_id,
                     person_company, 
                     contact_number
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     patientData.lastName,
                     patientData.firstName,
                     patientData.middleName || null,
-                    patientData.birthDate,
+                    patientData.birthdate,
                     genderId,
                     statusId,
                     occupationId,
+                    addressId,
                     patientData.company || null,
-                    patientData.mobileNumber
+                    patientData.mobile
                 ]
             );
-            
+
             const personId = personInsertResult.insertId;
 
-            // 5. Insert into tbl_patient
+            // 8. Insert into tbl_patient
             const currentDate = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
             const patientInsertResult = await executeQuery(
                 connection,
                 'INSERT INTO tbl_patient (date_added, person_id) VALUES (?, ?)',
                 [currentDate, personId]
             );
-            
+
             const patientId = patientInsertResult.insertId;
-
-            // 6. Process city - check if exists first
-            const cityId = await getOrCreateCity(connection, patientData.address.city);
-
-            // 7. Process barangay - check if exists first
-            const barangayId = await getOrCreateBarangay(connection, patientData.address.barangay, cityId);
-
-            // 8. Insert into tbl_address (after checking if it already exists)
-            await insertAddressIfNotExists(
-                connection, 
-                patientData.address.street, 
-                personId, 
-                barangayId
-            );
 
             // 9. Add any medical conditions if provided
             if (patientData.medicalConditions && patientData.medicalConditions.length > 0) {
                 for (const condition of patientData.medicalConditions) {
+                    const conditionId = await getOrCreateRecord(
+                        connection,
+                        'tbl_medical_condition',
+                        'condition_id',
+                        'condition_name',
+                        condition
+                    );
+
                     await executeQuery(
                         connection,
-                        'INSERT INTO tbl_medical_condition (patient_id, remarks) VALUES (?, ?)',
-                        [patientId, condition]
+                        'INSERT INTO tbl_medical_condition_patient (patient_id, condition_id) VALUES (?, ?)',
+                        [patientId, conditionId]
                     );
                 }
             }
 
             // 10. Add medical history if provided
-            if (patientData.currentMedications && patientData.currentMedications.length > 0) {
-                for (const medication of patientData.currentMedications) {
+            if (patientData.medicalHistory && patientData.medicalHistory.length > 0) {
+                for (const history of patientData.medicalHistory) {
+                    const historyId = await getOrCreateRecord(
+                        connection,
+                        'tbl_medical_history',
+                        'history_id',
+                        'history_name',
+                        history
+                    );
+
                     await executeQuery(
                         connection,
-                        'INSERT INTO tbl_medical_history (patient_id, remarks) VALUES (?, ?)',
-                        [patientId, medication]
+                        'INSERT INTO tbl_medical_history_patient (patient_id, history_id) VALUES (?, ?)',
+                        [patientId, historyId]
                     );
                 }
             }
@@ -428,86 +446,181 @@ async function deletePatientHandler(connection, req, res) {
         if (!req.query.id) {
             return res.status(400).json({ success: false, message: 'Patient id not provided!' });
         }
-        
+
         const patientId = req.query.id;
-        
+
         // Check if patient exists
         const patientExists = await checkPatientExists(connection, patientId);
         if (!patientExists) {
-            return res.status(404).json({ success: false, message: 'Patient not in database!' });
+            return res.status(404).json({ success: false, message: 'Patient not found in database!' });
         }
-        
+
         // Start transaction and perform deletion
         return await executeTransaction(connection, async () => {
-            // Step 1: Get the person_id and session_ids
-            const personId = await getPersonId(connection, patientId);
-            const sessionIds = await getSessionIds(connection, patientId);
-            
-            // Step 2: Delete related data in the correct order
-            // Delete patient tooth chart if exists
-            await executeQuery(connection, 
-                `DELETE FROM tbl_patient_tooth_chart WHERE patient_id = ?;`, 
+            // Step 1: Get the person_id and address_id
+            const personResult = await executeQuery(
+                connection,
+                `SELECT p.person_id, p.address_id 
+                 FROM tbl_patient tp 
+                 JOIN tbl_person p ON tp.person_id = p.person_id 
+                 WHERE tp.patient_id = ?`,
                 [patientId]
             );
             
-            // Delete medical conditions and history
-            await executeQuery(connection, 
-                `DELETE FROM tbl_medical_condition WHERE patient_id = ?;`, 
+            if (personResult.length === 0) {
+                throw new Error(`Patient with ID ${patientId} not found`);
+            }
+            
+            const personId = personResult[0].person_id;
+            const addressId = personResult[0].address_id;
+            
+            // Step 2: Delete related data in the correct order (respecting foreign key constraints)
+            
+            // Delete medical condition relationships
+            await executeQuery(
+                connection,
+                `DELETE FROM tbl_medical_condition_patient WHERE patient_id = ?`,
+                [patientId]
+            );
+
+            // Delete medical history relationships
+            await executeQuery(
+                connection,
+                `DELETE FROM tbl_medical_history_patient WHERE patient_id = ?`,
+                [patientId]
+            );
+
+            // Delete patient tooth chart
+            await executeQuery(
+                connection,
+                `DELETE FROM tbl_patient_tooth_chart WHERE patient_id = ?`,
+                [patientId]
+            );
+
+            // Get all session IDs for this patient
+            const sessions = await executeQuery(
+                connection,
+                `SELECT session_id FROM tbl_session WHERE patient_id = ?`,
                 [patientId]
             );
             
-            await executeQuery(connection, 
-                `DELETE FROM tbl_medical_history WHERE patient_id = ?;`, 
-                [patientId]
-            );
+            const sessionIds = sessions.map(session => session.session_id);
             
+            // Process sessions if any exist
             if (sessionIds.length > 0) {
-                // Handle session-related deletions
-                // Create placeholders for the IN clause
-                const sessionPlaceholders = sessionIds.map(() => '?').join(',');
-                
                 // Delete prescriptions related to sessions
-                await executeQuery(connection, 
-                    `DELETE FROM tbl_prescription WHERE session_id IN (${sessionPlaceholders});`, 
-                    sessionIds
+                await executeQuery(
+                    connection,
+                    `DELETE FROM tbl_prescription WHERE session_id IN (?)`,
+                    [sessionIds]
                 );
                 
                 // Delete services related to sessions
-                await executeQuery(connection, 
-                    `DELETE FROM tbl_service WHERE session_id IN (${sessionPlaceholders});`, 
-                    sessionIds
+                await executeQuery(
+                    connection,
+                    `DELETE FROM tbl_service WHERE session_id IN (?)`,
+                    [sessionIds]
+                );
+                
+                // Delete all sessions
+                await executeQuery(
+                    connection,
+                    `DELETE FROM tbl_session WHERE patient_id = ?`,
+                    [patientId]
                 );
             }
             
-            // Delete sessions
-            await executeQuery(connection, 
-                `DELETE FROM tbl_session WHERE patient_id = ?;`, 
-                [patientId]
-            );
-            
             // Delete patient record
-            await executeQuery(connection, 
-                `DELETE FROM tbl_patient WHERE patient_id = ?;`, 
+            await executeQuery(
+                connection,
+                `DELETE FROM tbl_patient WHERE patient_id = ?`,
                 [patientId]
             );
             
-            // Delete address record
-            await executeQuery(connection, 
-                `DELETE FROM tbl_address WHERE person_id = ?;`, 
+            // Delete the person record
+            await executeQuery(
+                connection,
+                `DELETE FROM tbl_person WHERE person_id = ?`,
                 [personId]
             );
             
-            // Finally delete person record
-            await executeQuery(connection, 
-                `DELETE FROM tbl_person WHERE person_id = ?;`, 
-                [personId]
-            );
+            // Check if address can be deleted (no other person uses it)
+            if (addressId) {
+                const addressUsageCount = await executeQuery(
+                    connection,
+                    `SELECT COUNT(*) as count FROM tbl_person WHERE address_id = ?`,
+                    [addressId]
+                );
+                
+                if (addressUsageCount[0].count === 0) {
+                    // Get barangay_id before deleting the address
+                    const addressInfo = await executeQuery(
+                        connection,
+                        `SELECT barangay_id FROM tbl_address WHERE address_id = ?`,
+                        [addressId]
+                    );
+                    
+                    const barangayId = addressInfo[0]?.barangay_id;
+                    
+                    // Delete the address
+                    await executeQuery(
+                        connection,
+                        `DELETE FROM tbl_address WHERE address_id = ?`,
+                        [addressId]
+                    );
+                    
+                    // Check if we need to clean up unused barangay
+                    if (barangayId) {
+                        const barangayUsageCount = await executeQuery(
+                            connection,
+                            `SELECT COUNT(*) as count FROM tbl_address WHERE barangay_id = ?`,
+                            [barangayId]
+                        );
+                        
+                        if (barangayUsageCount[0].count === 0) {
+                            // Get city_id before deleting the barangay
+                            const barangayInfo = await executeQuery(
+                                connection,
+                                `SELECT city_id FROM tbl_barangay WHERE barangay_id = ?`,
+                                [barangayId]
+                            );
+                            
+                            const cityId = barangayInfo[0]?.city_id;
+                            
+                            // Delete the barangay
+                            await executeQuery(
+                                connection,
+                                `DELETE FROM tbl_barangay WHERE barangay_id = ?`,
+                                [barangayId]
+                            );
+                            
+                            // Check if we need to clean up unused city
+                            if (cityId) {
+                                const cityUsageCount = await executeQuery(
+                                    connection,
+                                    `SELECT COUNT(*) as count FROM tbl_barangay WHERE city_id = ?`,
+                                    [cityId]
+                                );
+                                
+                                if (cityUsageCount[0].count === 0) {
+                                    // Delete the city
+                                    await executeQuery(
+                                        connection,
+                                        `DELETE FROM tbl_city WHERE city_id = ?`,
+                                        [cityId]
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             return {
                 status: 200,
                 data: {
-                    success: true, 
-                    message: 'Patient and all related data deleted successfully!'
+                    success: true,
+                    message: 'Patient and all related data deleted successfully'
                 }
             };
         }, res);
@@ -515,6 +628,229 @@ async function deletePatientHandler(connection, req, res) {
         console.error('Unexpected error:', error);
         return res.status(500).json({ success: false, message: 'Server error' });
     }
+}
+
+
+// Handle storing session data from localStorage to database tables
+async function handleSessionDataStorage(connection, req, res) {
+    try {
+        // Extract session data from request
+        const sessionData = req.body;
+        
+        if (!sessionData) {
+            return res.status(400).json({ error: "No session data provided" });
+        }
+        
+        // Set default dentist ID to 0 as specified
+        const dentistId = 0;
+        
+        // 1. Insert session record
+        const sessionResult = await insertSessionRecord(connection, sessionData, dentistId);
+        const sessionId = sessionResult.insertId;
+        
+        // 2. Insert service records
+        if (sessionData.service_values && sessionData.service_values.length > 0) {
+            await insertServiceRecords(connection, sessionData.service_values, sessionId);
+        }
+        
+        // 3. Insert prescription records
+        if (sessionData.prescriptions && sessionData.prescriptions.length > 0) {
+            await insertPrescriptionRecords(connection, sessionData.prescriptions, sessionId);
+        }
+        
+        // 4. Update patient tooth chart if present
+        if (sessionData.tooth_chart_image) {
+            await updatePatientToothChart(connection, sessionData.patient_id, sessionData.tooth_chart_image);
+        }
+        
+
+
+        return res.status(200).json({ 
+            success: true, 
+            message: "Session data stored successfully", 
+            sessionId: sessionId 
+        });
+        
+    } catch (error) {
+        console.error("Error storing session data:", error);
+        return res.status(500).json({ error: "Failed to store session data: " + error.message });
+    }
+}
+
+// Insert session record in tbl_session
+async function insertSessionRecord(connection, sessionData, dentistId) {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const currentTime = new Date().toTimeString().split(' ')[0];
+    
+    const sql = `
+        INSERT INTO tbl_session 
+        (patient_id, dentist_id, session_date, session_remarks, session_remarks_image, session_time_start, session_time_end) 
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+    
+    const values = [
+        sessionData.patient_id,
+        dentistId,
+        currentDate,
+        sessionData.session_remarks || null,
+        sessionData.session_remarks_image || null,
+        currentTime,
+        currentTime
+    ];
+    
+    return await executeQuery(connection, sql, values);
+}
+
+// Insert service records in tbl_service
+async function insertServiceRecords(connection, services, sessionId) {
+    const serviceInsertPromises = services.map(service => {
+        const sql = `
+            INSERT INTO tbl_service 
+            (session_id, service_offered_id, service_tooth_number, service_status, service_fee, service_fee_status, service_amount_tendered) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        `;
+        
+        const values = [
+            sessionId,
+            service.service_offered_id,
+            service.service_tooth_number || null,
+            service.service_status || 'Incomplete',
+            service.fee || 0.00,
+            service.status || 'UNPAID',
+            service.tendered || 0.00
+        ];
+        
+        return executeQuery(connection, sql, values);
+    });
+    
+    return await Promise.all(serviceInsertPromises);
+}
+
+// Insert prescription records in tbl_prescription and tbl_medication
+async function insertPrescriptionRecords(connection, prescriptions, sessionId) {
+    const prescriptionPromises = prescriptions.map(async prescription => {
+        // First insert the medication
+        const medicationSql = `
+            INSERT INTO tbl_medication 
+            (medication_name, medication_dosage, medication_frequency_duration) 
+            VALUES (?, ?, ?)
+        `;
+        
+        const medicationValues = [
+            prescription.medication,
+            prescription.dosage || null,
+            prescription.frequencyDuration || null
+        ];
+        
+        const medicationResult = await executeQuery(connection, medicationSql, medicationValues);
+        const medicationId = medicationResult.insertId;
+        
+        // Then insert the prescription
+        const prescriptionSql = `
+            INSERT INTO tbl_prescription 
+            (session_id, medication_id, special_instructions) 
+            VALUES (?, ?, ?)
+        `;
+        
+        const prescriptionValues = [
+            sessionId,
+            medicationId,
+            null // special instructions if needed
+        ];
+        
+        return executeQuery(connection, prescriptionSql, prescriptionValues);
+    });
+    
+    return await Promise.all(prescriptionPromises);
+}
+
+// Update patient tooth chart
+async function updatePatientToothChart(connection, patientId, toothChartImage) {
+    const currentDate = new Date().toISOString().split('T')[0];
+    
+    // Extract the base64 data and convert to binary
+    // (Assuming toothChartImage is in format "data:image/png;base64,...")
+    let imageData = toothChartImage;
+    
+    // Option 1: If you still want to store in DB but optimize the storage
+    if (toothChartImage.startsWith('data:')) {
+        const base64Data = toothChartImage.split(',')[1];
+        imageData = Buffer.from(base64Data, 'base64');
+    }
+    
+    // Option 2: Save to filesystem and store path (better approach)
+    /* 
+    const imagePath = await saveImageToFileSystem(toothChartImage, patientId);
+    */
+    
+    // Check if tooth chart already exists for this patient
+    const checkSql = "SELECT patient_id FROM tbl_patient_tooth_chart WHERE patient_id = ?";
+    const checkResult = await executeQuery(connection, checkSql, [patientId]);
+    
+    try {
+        if (checkResult.length > 0) {
+            // Update existing tooth chart
+            const updateSql = `
+                UPDATE tbl_patient_tooth_chart 
+                SET tooth_chart = ?, date_added = ? 
+                WHERE patient_id = ?
+            `;
+            
+            return await executeQuery(connection, updateSql, [imageData, currentDate, patientId]);
+        } else {
+            // Insert new tooth chart
+            const insertSql = `
+                INSERT INTO tbl_patient_tooth_chart 
+                (patient_id, tooth_chart, date_added) 
+                VALUES (?, ?, ?)
+            `;
+            
+            return await executeQuery(connection, insertSql, [patientId, imageData, currentDate]);
+        }
+    } catch (error) {
+        console.error("Error saving tooth chart:", error);
+        throw error; // Re-throw to be caught by the transaction handler
+    }
+}
+
+// Helper function to save image to filesystem
+function saveImageToFileSystem(base64Image, patientId) {
+    return new Promise((resolve, reject) => {
+        if (!base64Image.startsWith('data:')) {
+            return resolve(base64Image); // Already a path, not base64
+        }
+        
+        const fs = require('fs');
+        const path = require('path');
+        
+        // Extract actual base64 data and determine file type
+        const matches = base64Image.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+        if (!matches || matches.length !== 3) {
+            return reject(new Error('Invalid base64 string'));
+        }
+        
+        const imageType = matches[1].split('/')[1];
+        const base64Data = matches[2];
+        const imageBuffer = Buffer.from(base64Data, 'base64');
+        
+        // Create directory if it doesn't exist
+        const uploadDir = path.join(__dirname, '../uploads/tooth_charts');
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        
+        // Generate unique filename
+        const filename = `patient_${patientId}_chart_${Date.now()}.${imageType}`;
+        const filepath = path.join(uploadDir, filename);
+        
+        // Write file
+        fs.writeFile(filepath, imageBuffer, (err) => {
+            if (err) return reject(err);
+            
+            // Return relative path to be stored in database
+            resolve(`/uploads/tooth_charts/${filename}`);
+        });
+    });
 }
 
 // Helper Functions
@@ -579,21 +915,32 @@ async function getOrCreateBarangay(connection, barangayName, cityId) {
  * @returns {Promise<void>}
  */
 async function insertAddressIfNotExists(connection, streetName, personId, barangayId) {
+    // New implementation to match schema - address is no longer tied to person_id in the table structure
     const addressResults = await executeQuery(
         connection,
-        'SELECT address_id FROM tbl_address WHERE address_street_name = ? AND person_id = ? AND barangay_id = ?',
-        [streetName, personId, barangayId]
+        'SELECT address_id FROM tbl_address WHERE address_street_name = ? AND barangay_id = ?',
+        [streetName, barangayId]
     );
 
+    let addressId;
     if (addressResults.length === 0) {
-        await executeQuery(
+        const result = await executeQuery(
             connection,
-            'INSERT INTO tbl_address (address_street_name, person_id, barangay_id) VALUES (?, ?, ?)',
-            [streetName, personId, barangayId]
+            'INSERT INTO tbl_address (address_street_name, barangay_id) VALUES (?, ?)',
+            [streetName, barangayId]
         );
+        addressId = result.insertId;
+    } else {
+        addressId = addressResults[0].address_id;
     }
-}
 
+    // Update the person record with the address_id
+    await executeQuery(
+        connection,
+        'UPDATE tbl_person SET address_id = ? WHERE person_id = ?',
+        [addressId, personId]
+    );
+}
 /**
  * Checks if a patient exists in the database
  * @param {Object} connection - Database connection
@@ -688,7 +1035,7 @@ function executeQuery(connection, query, params = []) {
 async function getOrCreateRecord(connection, tableName, idField, titleField, titleValue) {
     const checkQuery = `SELECT ${idField} FROM ${tableName} WHERE ${titleField} = ?`;
     const results = await executeQuery(connection, checkQuery, [titleValue]);
-    
+
     if (results.length > 0) {
         return results[0][idField];
     } else {
@@ -718,7 +1065,7 @@ async function executeTransaction(connection, callback, res) {
 
             try {
                 const result = await callback();
-                
+
                 connection.commit((err) => {
                     if (err) {
                         return connection.rollback(() => {
@@ -727,7 +1074,7 @@ async function executeTransaction(connection, callback, res) {
                             reject(err);
                         });
                     }
-                    
+
                     res.status(result.status).json(result.data);
                     resolve(result);
                 });
@@ -745,5 +1092,6 @@ async function executeTransaction(connection, callback, res) {
 module.exports = {
     addPatientHandler,
     deletePatientHandler,
-    updatePatientHandler
+    updatePatientHandler,
+    handleSessionDataStorage
 }

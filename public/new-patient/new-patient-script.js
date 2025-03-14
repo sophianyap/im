@@ -51,6 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
             medicationCard.parentElement.removeChild(medicationCard);
         });
     });
+
+
+    setTimeout(() => {
+        document.getElementById("loading-overlay").style.display = "none";
+      }, 1000);
 });
 
 document.getElementById('save-profile').addEventListener('click', async () => {
@@ -58,19 +63,19 @@ document.getElementById('save-profile').addEventListener('click', async () => {
         firstName: document.getElementById('patient-firstname').value,
         middleName: document.getElementById('patient-middlename').value,
         lastName: document.getElementById('patient-lastname').value,
-        mobileNumber: document.getElementById('patient-mobile').value,
-        birthDate: document.getElementById('patient-birthdate').value,
+        mobile: document.getElementById('patient-mobilenum').value,
+        birthdate: document.getElementById('patient-birthdate').value,
         occupation: document.getElementById('patient-occupation').value,
         gender: document.getElementById('gender-title').value,
         civilStatus: document.getElementById('status-title').value,
         company: document.getElementById('patient-company').value,
         address: {
-            city: document.getElementById('patient-city').value,
-            barangay: document.getElementById('patient-brngy').value,
-            street: document.getElementById('patient-street').value
+            city_name: document.getElementById('patient-city').value,
+            barangay_name: document.getElementById('patient-brngy').value,
+            street_name: document.getElementById('patient-street').value
         },
         medicalConditions: Array.from(document.querySelectorAll('.med-input')).map(input => input.value),
-        currentMedications: Array.from(document.querySelectorAll('.curmed-input')).map(input => input.value)
+        medicalHistory: Array.from(document.querySelectorAll('.curmed-input')).map(input => input.value)
     };
 
     alert(JSON.stringify(patientData));

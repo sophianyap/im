@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <title>Checkout</title>
-    <link rel="icon" type="image/png" href="assets\dentistry.png">
+    <link rel="icon" type="image/png" href="/assets/dentistry.png">
 
 </head>
 
 <body>
-    <<div id="loading-overlay">
+    <div id="loading-overlay">
         <section class="dots-container">
             <div class="dot"></div>
             <div class="dot"></div>
@@ -47,7 +47,7 @@
                     <th>Payment Status</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="billing-body">
                 <tr class="table-row">
                     <td class="table-data">TOOTH FILLING</td>
                     <td class="table-data">₱<input id="treatment-fee" class="input-billing" placeholder="0.00"></td>
@@ -73,8 +73,7 @@
                     <th>Frequency & Duration</th>
                 </tr>
             </thead>
-            <tbody>
-                
+            <tbody id="medication-body">
                 <tr class="table-row">
                     <td><button class="remove-prescription">
                         x
@@ -94,5 +93,5 @@
     
     </div>
     
-    
+    <script src="billing-script.js"></script>
 </body>

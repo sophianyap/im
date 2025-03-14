@@ -21,6 +21,10 @@ api.get(`/get-patients`, async (req, res) => {
     return await apiGetHandlers.getPatientsHandler(connection, req, res);
 });
 
+api.get(`/get-services-offered`, async (req, res) => {
+    return await apiGetHandlers.getServicesOfferedHandler(connection, req, res);
+});
+
 // POST handlers
 api.post(`/add-patient`, async (req, res) => {
     return await apiPostHandlers.addPatientHandler(connection, req, res);
@@ -32,6 +36,10 @@ api.post('/delete-patient', async (req, res) => {
 
 api.post('/update-patient', async (req, res) => {
     return await apiPostHandlers.updatePatientHandler(connection, req, res);
+});
+
+api.post('/store-session-data', async (req, res) => {
+    return await apiPostHandlers.handleSessionDataStorage(connection, req, res);
 });
 
 module.exports = api
