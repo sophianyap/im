@@ -7,8 +7,7 @@ function resetPatientInfo() {
 }
 
 document.getElementById('delete-patient').addEventListener('click', async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const patientId = urlParams.get('patient-id');
+    const patientId = localStorage.getItem("current_patient_id");
 
     try {
         const response = await fetch(`/api/delete-patient?id=${patientId}`, {
@@ -35,7 +34,7 @@ function addPatientInfo(patient) {
     console.log(patient);
 
     // Updating patient information dynamically
-    document.querySelector('.patient-name').textContent = `${patient.lastName}, ${patient.firstName} ${patient.middleName}`;
+    document.querySelector('.patient-name').textContent = `${patient.lastName}, ${patient.firstName} ${!(patient.middleName) ? '' : patient.middleName}`;
     document.querySelector('.patient-id').textContent = patient.id;
     document.querySelector('.date-added').textContent = patient.dateAdded;
 
@@ -72,16 +71,11 @@ function addPatientInfo(patient) {
 }
 
 document.querySelectorAll('#edit-profile').forEach(button => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const patientId = urlParams.get('patient-id');
-    if (patientId) {
-        button.closest('a').href = `/edit-profile/index.html?patient-id=${patientId}`;
-    }
+    button.closest('a').href = `/edit-profile/`;
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const patientId = urlParams.get('patient-id');
+    const patientId = localStorage.getItem("current_patient_id");
 
     if (!patientId) {
         console.error('No patient ID found in the URL.');

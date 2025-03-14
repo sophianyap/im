@@ -63,6 +63,7 @@ document.getElementById('save-profile').addEventListener('click', async () => {
         occupation: document.getElementById('patient-occupation').value,
         gender: document.getElementById('gender-title').value,
         civilStatus: document.getElementById('status-title').value,
+        company: document.getElementById('patient-company').value,
         address: {
             city: document.getElementById('patient-city').value,
             barangay: document.getElementById('patient-brngy').value,

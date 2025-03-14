@@ -5,7 +5,8 @@ function makePatientDiv(patient) {
 
   // Create the anchor element
   const patientCardArea = document.createElement('a');
-  patientCardArea.href = `/patient-info/index.html?patient-id=${patient.patient_id}`;
+  patientCardArea.onclick = () => { localStorage.setItem("current_patient_id", patient.patient_id); }
+  patientCardArea.href = `/patient-info/`;
   patientCardArea.className = 'patient-card-area';
 
   // Create the button element
@@ -72,7 +73,33 @@ function makePatientDiv(patient) {
   return patientContainer;
 }
 
+var patientsList = []
+function fillPatients(stringFilter) {
+  const mainContainer = document.querySelector(".patient-container");
+  mainContainer.innerHTML = '';
+
+  if (stringFilter != '' && stringFilter != null) {
+    patientsList.filter((patient) => patient.last_name.toLowerCase().includes(stringFilter) || patient.first_name.toLowerCase().includes(stringFilter)).forEach(patient => {
+      const patientElement = makePatientDiv(patient);
+      mainContainer.appendChild(patientElement);
+    })
+  } else {
+    patientsList.forEach(patient => {
+      const patientElement = makePatientDiv(patient);
+      mainContainer.appendChild(patientElement);
+    })
+  }  
+}
+
+document.getElementById('search-input').oninput = () => {
+  console.log("hi");
+  fillPatients(document.getElementById('search-input').value.toLowerCase());
+};
+
 document.addEventListener('DOMContentLoaded', function () {
+  // Reset patient id
+  localStorage.removeItem("current_patient_id");
+
   // Fill patient container
   fetch('/api/get-patients', {
     method: 'GET',
@@ -93,17 +120,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const totalNo = document.getElementById("total-no");
       totalNo.innerHTML = data.length;
 
-      // Get the container where patients will be displayed
-      const mainContainer = document.querySelector(".patient-container"); // Replace with your actual container ID
-
-      // Clear existing content if needed
-      mainContainer.innerHTML = '';
-
-      // Add each patient to the display
+      // Add each patient to the patientsList
       data.forEach(patient => {
-        const patientElement = makePatientDiv(patient);
-        mainContainer.appendChild(patientElement);
+        patientsList.push(patient);
       });
+
+      fillPatients();
     })
     .catch(error => {
       console.error('Error:', error);

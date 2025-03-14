@@ -240,7 +240,6 @@ async function addPatientHandler(connection, req, res) {
             'birthDate',
             'gender',
             'civilStatus',
-            'occupation',
             'mobileNumber'
         ];
 

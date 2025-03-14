@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const patientId = urlParams.get('patient-id');
+    const patientId = localStorage.getItem("current_patient_id");
     
     if (!patientId) {
-        console.error('No patient ID found in the URL.');
+        console.error('No patient ID found in the local storage.');
         return;
     }
     
@@ -69,7 +68,7 @@ function populateForm(patient) {
     document.getElementById('patient-middle-name').value = patient.middleName || '';
     document.getElementById('patient-last-name').value = patient.lastName || '';
     document.getElementById('patient-mobile').value = patient.mobile || '';
-    document.getElementById('patient-birthdate').value = patient.birthdate;
+    document.getElementById('patient-birthdate').value = patient.birthdate  ;
     document.getElementById('patient-occupation').value = patient.occupation || '';
     document.getElementById('patient-gender').value = patient.gender || '';
     document.getElementById('patient-company').value = patient.company || '';
