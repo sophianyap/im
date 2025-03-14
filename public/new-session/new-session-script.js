@@ -10,10 +10,23 @@ document.addEventListener('mousemove', draw);
 document.addEventListener('mousedown', setPosition);
 document.addEventListener('mouseenter', setPosition);
 
-// new position from mouse event
+// Add touch event listeners
+document.addEventListener('touchmove', draw);
+document.addEventListener('touchstart', setPosition);
+
+// new position from mouse or touch event
 function setPosition(e) {
-    pos.x = e.offsetX;
-    pos.y = e.offsetY;
+    if (e.touches) {
+        // Handle touch event
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        pos.x = touch.clientX - rect.left;
+        pos.y = touch.clientY - rect.top;
+    } else {
+        // Handle mouse event
+        pos.x = e.offsetX;
+        pos.y = e.offsetY;
+    }
 }
 
 // resize canvas
@@ -33,12 +46,16 @@ function draw(e) {
     var canvasEndX = bounding.x + bounding.width;
     var canvasEndY = bounding.y + bounding.height;
 
-    // mouse left button must be pressed
-    if (e.buttons !== 1) return;
+    // Check if it's a touch event or mouse event
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-    // Dont input if mouse is not in canvas
-    if ((e.clientX < canvasStartX || e.clientX > canvasEndX)) return;
-    if ((e.clientY < canvasStartY || e.clientY > canvasEndY)) return;
+    // Check if the event is within the canvas bounds
+    if ((clientX < canvasStartX || clientX > canvasEndX)) return;
+    if ((clientY < canvasStartY || clientY > canvasEndY)) return;
+
+    // Check if the mouse button is pressed or if it's a touch event
+    if (e.buttons !== 1 && !e.touches) return;
 
     ctx.beginPath(); // begin
 
@@ -53,7 +70,22 @@ function draw(e) {
     ctx.stroke(); // draw it!
 }
 
-
+// Prevent scrolling when touching the canvas
+document.body.addEventListener('touchstart', function (e) {
+    if (e.target === canvas) {
+        e.preventDefault();
+    }
+}, { passive: false });
+document.body.addEventListener('touchend', function (e) {
+    if (e.target === canvas) {
+        e.preventDefault();
+    }
+}, { passive: false });
+document.body.addEventListener('touchmove', function (e) {
+    if (e.target === canvas) {
+        e.preventDefault();
+    }
+}, { passive: false });
 
 // Function to add a new medical condition input field
 function addMedicalCondition() {
