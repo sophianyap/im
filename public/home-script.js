@@ -136,4 +136,9 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error('Error:', error);
       alert(`Error: ${error}`);
     });
+
+    setTimeout(() => {
+      document.getElementById("loading-overlay").style.display = "none";
+    }, 1000);
 })
+

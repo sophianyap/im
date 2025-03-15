@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
@@ -7,9 +8,9 @@
     <title>Dental Clinic</title>
     <link rel="icon" type="image/png" href="assets\dentistry.png">
 </head>
+
 <body>
     <div id="loading-overlay">
-        <h1 style="color: white;">CASCABEL -DENTAL CLINIC-</h1><br>
         <section class="dots-container">
             <div class="dot"></div>
             <div class="dot"></div>
@@ -19,7 +20,7 @@
         </section>
     </div>
     <div class="page-container">
-        
+
         <div class="title-container">
             <section id="home">
                 <div class="title-area">
@@ -53,23 +54,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="patients-container-area">
-                    <h2 id="homepage-title">PATIENTS</h2>
-                    <div class="patient-line">
-                        <div class="search-box">
-                            <input type="text" placeholder="SEARCH PATIENT" id="search-input">
-                            <button type="submit">
-                                <img id="search" src="/assets/search.png" alt="search">
-                            </button>
-                        </div>
-                        <a href="/new-patient/">
-                            <button id="add-button">
-                                +
-                            </button>
-                        </a>
-                    </div>
-                </div>
+
                 <div class="patient-container">
+                    <div class="patients-container-area">
+                        <h2 id="homepage-title">PATIENTS</h2>
+                        <div class="patient-line">
+                            <div class="search-box">
+                                <input type="text" placeholder="SEARCH PATIENT" id="search-input">
+                                <button type="submit">
+                                    <img id="search" src="/assets/search.png" alt="search">
+                                </button>
+                            </div>
+                            <a href="/new-patient/">
+                                <button id="add-button">
+                                    +
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                     <a href="/patient-info/" class="patient-card-area">
                         <button class="patient-card">
                             <div class="patient-info">
@@ -86,11 +88,13 @@
                             </div>
                         </button>
                     </a>
-                    </div>
                 </div>
-            </section>
         </div>
+        </section>
+    </div>
     </div>
     <script src="home-script.js"></script>
+
 </body>
+
 </html>

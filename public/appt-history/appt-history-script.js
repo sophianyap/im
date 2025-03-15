@@ -205,3 +205,7 @@ function arrayBufferToBase64(buffer) {
     }
     return window.btoa(binary);
 }
+
+setTimeout(() => {
+    document.getElementById("loading-overlay").style.display = "none";
+  }, 1000);
