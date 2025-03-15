@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Failed to fetch billing information');
             }
         })
+        .then(() => {
+            setTimeout(() => {
+              if (document.getElementById("loading-overlay")) {
+                document.getElementById("loading-overlay").style.display = "none";
+              }
+            }, 1000);
+          })
         .catch(error => {
             console.error('Error fetching billing information:', error);
             alert('Error fetching billing information');

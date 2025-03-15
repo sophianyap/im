@@ -10,15 +10,6 @@
 </head>
 
 <body>
-    <div id="loading-overlay">
-        <section class="dots-container">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </section>
-    </div>
     <div class="page-container">
 
         <div class="title-container">
@@ -72,29 +63,30 @@
                             </a>
                         </div>
                     </div>
-                    <a href="/patient-info/" class="patient-card-area">
-                        <button class="patient-card">
-                            <div class="patient-info">
-                                <div class="first-line">
-                                    <div class="patient-id">123</div>
-                                    <div class="patients-name">LAST NAME, First Name</div>
+                    <div id="patient-card-container" style="width: 100%">
+                        <a href="/patient-info/" class="patient-card-area">
+                            <button class="patient-card">
+                                <div class="patient-info">
+                                    <div class="first-line">
+                                        <div class="patient-id">123</div>
+                                        <div class="patients-name">LAST NAME, First Name</div>
+                                    </div>
+                                    <div class="patient-details">
+                                        <span class="patient-age">20</span>
+                                        <span class="patient-gender">F</span>
+                                        <span class="divider">|</span>
+                                        <span class="patient-contact">0912 3456 789</span>
+                                    </div>
                                 </div>
-                                <div class="patient-details">
-                                    <span class="patient-age">20</span>
-                                    <span class="patient-gender">F</span>
-                                    <span class="divider">|</span>
-                                    <span class="patient-contact">0912 3456 789</span>
-                                </div>
-                            </div>
-                        </button>
-                    </a>
+                            </button>
+                        </a>
+                    </div>
                 </div>
         </div>
         </section>
     </div>
     </div>
     <script src="home-script.js"></script>
-
 </body>
 
 </html>

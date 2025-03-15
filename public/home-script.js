@@ -1,13 +1,9 @@
 function makePatientDiv(patient) {
-  // Create the container div
-  const patientContainer = document.createElement('div');
-  patientContainer.className = 'patient-container';
-
-  // Create the anchor element
+  // Create a link element (matches the HTML structure)
   const patientCardArea = document.createElement('a');
-  patientCardArea.onclick = () => { localStorage.setItem("current_patient_id", patient.patient_id); }
-  patientCardArea.href = `/patient-info/`;
+  patientCardArea.href = "/patient-info/";
   patientCardArea.className = 'patient-card-area';
+  patientCardArea.onclick = () => { localStorage.setItem("current_patient_id", patient.patient_id); }
 
   // Create the button element
   const patientCardButton = document.createElement('button');
@@ -67,15 +63,12 @@ function makePatientDiv(patient) {
   // Append the button to the anchor
   patientCardArea.appendChild(patientCardButton);
 
-  // Append the anchor to the container
-  patientContainer.appendChild(patientCardArea);
-
-  return patientContainer;
+  return patientCardArea;
 }
 
 var patientsList = []
 function fillPatients(stringFilter) {
-  const mainContainer = document.querySelector(".patient-container");
+  const mainContainer = document.getElementById("patient-card-container");
   mainContainer.innerHTML = '';
 
   if (stringFilter != '' && stringFilter != null) {
@@ -92,13 +85,12 @@ function fillPatients(stringFilter) {
 }
 
 document.getElementById('search-input').oninput = () => {
-  console.log("hi");
   fillPatients(document.getElementById('search-input').value.toLowerCase());
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  // Reset patient id
-  localStorage.removeItem("current_patient_id");
+  // Reset local storage
+  localStorage.clear();
 
   // Fill patient container
   fetch('/api/get-patients', {
@@ -114,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return response.json();
     })
     .then(data => {
-      console.log(data); // Log data instead of response
+      console.log(data);
 
       // Set total no. of patients
       const totalNo = document.getElementById("total-no");
@@ -129,7 +121,9 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .then(() => {
       setTimeout(() => {
-        document.getElementById("loading-overlay").style.display = "none";
+        if (document.getElementById("loading-overlay")) {
+          document.getElementById("loading-overlay").style.display = "none";
+        }
       }, 1000);
     })
     .catch(error => {
@@ -138,7 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     setTimeout(() => {
-      document.getElementById("loading-overlay").style.display = "none";
+      if (document.getElementById("loading-overlay")) {
+        document.getElementById("loading-overlay").style.display = "none";
+      }
     }, 1000);
 })
-
