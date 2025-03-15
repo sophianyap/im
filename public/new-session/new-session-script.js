@@ -329,7 +329,7 @@ const addToothChartBtn = document.getElementById('add-toothchart');
 // Create a file input element for selecting images
 const fileInput = document.createElement('input');
 fileInput.type = 'file';
-fileInput.accept = 'image/*';
+fileInput.accept = 'image/png';
 fileInput.style.display = 'none';
 document.body.appendChild(fileInput);
 
