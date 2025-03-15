@@ -134,4 +134,4 @@ docker compose down -v
 
 ## License
 
-MIT License
+This project is licensed under the [MIT License](LICENSE). 
